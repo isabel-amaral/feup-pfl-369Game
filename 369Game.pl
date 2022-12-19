@@ -31,7 +31,7 @@ insert_piece([Member | Rest], Piece, Position, Result) :- Position1 is Position-
                                                           insert_piece(Rest, Piece, Position1, R1),
                                                           Result = [Member | R1].
 
-insert_piece([Row | Rest], Elem, 0, Col, NewBoard) :- insert_piece(Row, Elem, Col, NewRow), NewBoard = [NewRow | Rest], !.
-insert_piece([Row | Rest], Elem, R, Col, NewBoard) :- Row1 is R-1,
-                                                       insert_piece(Rest, Elem, Row1, Col, NB1),
+insert_piece([Row | Rest], Piece, 0, Col, NewBoard) :- insert_piece(Row, Piece, Col, NewRow), NewBoard = [NewRow | Rest], !.
+insert_piece([Row | Rest], Piece, R, Col, NewBoard) :- Row1 is R-1,
+                                                       insert_piece(Rest, Piece, Row1, Col, NB1),
                                                        NewBoard = [Row | NB1].
