@@ -26,12 +26,12 @@ read_move_until_valid(Size, Move):- repeat,
                                     !.              
 
 
-insert_piece([_ | Rest], Elem, 0, [Elem | Rest]) :- !.
-insert_piece([Member | Rest], Elem, Position, Result) :- Position1 is Position-1,
-                                                         insert_piece(Rest, Elem, Position1, R1),
-                                                         Result = [Member | R1].
+insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
+insert_piece([Member | Rest], Piece, Position, Result) :- Position1 is Position-1,
+                                                          insert_piece(Rest, Piece, Position1, R1),
+                                                          Result = [Member | R1].
 
-insert_piece([Line | Rest], Elem, 0, Col, NewBoard) :- insert_piece(Line, Elem, Col, NewLine), NewBoard = [NewLine | Rest], !.
-insert_piece([Line | Rest], Elem, L, Col, NewBoard) :- Line1 is L-1,
-                                                       insert_piece(Rest, Elem, Line1, Col, NB1),
-                                                       NewBoard = [Line | NB1].
+insert_piece([Row | Rest], Elem, 0, Col, NewBoard) :- insert_piece(Row, Elem, Col, NewRow), NewBoard = [NewRow | Rest], !.
+insert_piece([Row | Rest], Elem, R, Col, NewBoard) :- Row1 is R-1,
+                                                       insert_piece(Rest, Elem, Row1, Col, NB1),
+                                                       NewBoard = [Row | NB1].
