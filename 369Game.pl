@@ -1,3 +1,10 @@
+% display_line_separators(+Counter)
+display_line_separators(0).
+display_line_separators(Counter) :-
+    write('-'),
+    CounterAux is Counter - 1,
+    display_line_separators(CounterAux).
+
 % display_column_tags(+BoardSize, +Counter)
 display_column_tags(BoardSize, BoardSize) :-
     write('|').
@@ -14,26 +21,32 @@ display_line([]) :- write('|').
 display_line([Column | Rest]) :-
     write('| '),
     write(Column),
-    write(' '),
+    write(' '),    
     display_line(Rest).
 
-% display_game_aux(+Board)
-display_game_aux([]) :-
-    write('-------------').
-display_game_aux([Line | Rest]) :-
-    write('-------------'),
+% display_game_aux(+BoardSize, +Board, +Counter)
+display_game_aux(BoardSize, [], _) :-
+    NChars is BoardSize * 4 + 3,
+    display_line_separators(NChars).
+display_game_aux(BoardSize, [Line | Rest], Counter) :-
+    NChars is BoardSize * 4 + 3,
+    display_line_separators(NChars),
     nl,
+    write(Counter),
+    write(' '),
     display_line(Line),
     nl,
-    display_game_aux(Rest).
+    CounterAux is Counter + 1,
+    display_game_aux(BoardSize, Rest, CounterAux).
 
 /* TODO: Change in order to receive game state */
 % display_game(+BoardSize, +Board)
 display_game(BoardSize, Board) :-
     nl,
+    write('  '),
     display_column_tags(BoardSize, 0),
     nl,
-    display_game_aux(Board).
+    display_game_aux(BoardSize, Board, 1).
 
 /*
 read_move(Line, Column) :- 
