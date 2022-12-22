@@ -34,16 +34,16 @@ read_move_until_valid(Size, Move):-
 %valid_moves_aux(Board, ListOfMoves).
 
 valid_moves_aux(Board, ListOfMoves) :- 
-    valid_moves_aux(Board, 0, 0, [], ListOfMoves).
+    valid_moves_aux(Board, 0, 0, ListOfMoves).
 
-valid_moves_aux([[]], _, _, _) :- !.
+valid_moves_aux([[]], _, _, []) :- !.
 
 valid_moves_aux([[]| Lines], Row, _, ListOfMoves) :- 
     Row1 is Row+1,
     valid_moves_aux(Lines, Row1, 0, ListOfMoves), 
     !.
 
-valid_moves_aux([[0 | Pieces] | Lines], Row, Col, ListOfMoves) :- 
+valid_moves_aux([[e | Pieces] | Lines], Row, Col, ListOfMoves) :- 
     Col1 is Col + 1,
     valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves1), 
     ListOfMoves = [[Row, Col] | ListOfMoves1],
