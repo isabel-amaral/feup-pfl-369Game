@@ -1,3 +1,17 @@
+display_line([]).
+display_line([Column | Rest]) :-
+    write('| '),
+    write(Column),
+    write(' |'),
+    display_line(Rest).
+
+% display_game_aux(+Board)
+display_game_aux([]).
+display_game_aux([Line | Rest]) :-
+    display_line(Line),
+    nl,
+    display_game_aux(Rest).
+
 /*
 read_move(Line, Column) :- 
     read(N-L),
@@ -27,7 +41,6 @@ read_move_until_valid(Size, Move):-
     Column =< Size-1,
     Move = [Row, Column],
     !.              
-
 
 insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
 insert_piece([Member | Rest], Piece, Position, Result) :- 
