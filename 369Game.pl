@@ -42,6 +42,30 @@ read_move_until_valid(Size, Move):-
     Move = [Row, Column],
     !.              
 
+
+% valid_moves(GameState, Player, ListOfMoves) :- 
+%valid_moves_aux(Board, ListOfMoves).
+
+valid_moves_aux(Board, ListOfMoves) :- 
+    valid_moves_aux(Board, 0, 0, [], ListOfMoves).
+
+valid_moves_aux([[]], _, _, _) :- !.
+
+valid_moves_aux([[]| Lines], Row, _, ListOfMoves) :- 
+    Row1 is Row+1,
+    valid_moves_aux(Lines, Row1, 0, ListOfMoves), 
+    !.
+
+valid_moves_aux([[0 | Pieces] | Lines], Row, Col, ListOfMoves) :- 
+    Col1 is Col + 1,
+    valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves1), 
+    ListOfMoves = [[Row, Col] | ListOfMoves1],
+    !.
+
+valid_moves_aux([[_ | Pieces] | Lines], Row, Col, ListOfMoves) :-
+    Col1 is Col + 1,
+    valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves).
+
 insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
 insert_piece([Member | Rest], Piece, Position, Result) :- 
     Position1 is Position-1,
