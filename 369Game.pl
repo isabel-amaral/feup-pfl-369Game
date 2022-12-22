@@ -1,13 +1,16 @@
 display_line([]).
 display_line([Column | Rest]) :-
-    write('| '),
     write(Column),
-    write(' |'),
+    write(' | '),
     display_line(Rest).
 
 % display_game_aux(+Board)
-display_game_aux([]).
+display_game_aux([]) :-
+    write('-------------').
 display_game_aux([Line | Rest]) :-
+    write('-------------'),
+    nl,
+    write('| '),
     display_line(Line),
     nl,
     display_game_aux(Rest).
