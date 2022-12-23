@@ -1,3 +1,5 @@
+:- consult('utils.pl').
+
 % create_board_line(+Counter, -Line)
 create_board_line(0, []).
 create_board_line(Counter, Line) :-
@@ -17,6 +19,7 @@ create_board(Size, Counter, Board) :-
     create_board_line(Size, Line),
     Board = [Line | BoardAux].
 
+% GameState is saved in the format [BoardSize, Board, WhitePlayer, BlackPlayer, NextPlayer]
 % initial_state(+Size, -GameState)
 initial_state(Size, [Size, Board, 0, 0, w]) :-
     create_board(Size, Size, Board).
