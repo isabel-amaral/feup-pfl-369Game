@@ -26,10 +26,23 @@ read_move_until_valid(Size, Move):-
     Column >= 0,
     Column =< Size-1,
     Move = [Row, Column],
-    !.              
+    !.  
 
+    
+insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
+insert_piece([Member | Rest], Piece, Position, Result) :- 
+    Position1 is Position-1,
+    insert_piece(Rest, Piece, Position1, R1),
+    Result = [Member | R1].
+insert_piece([Row | Rest], Piece, 0, Col, NewBoard) :- 
+    insert_piece(Row, Piece, Col, NewRow), 
+    NewBoard = [NewRow | Rest], 
+    !.
+insert_piece([Row | Rest], Piece, R, Col, NewBoard) :- 
+    Row1 is R-1,
+    insert_piece(Rest, Piece, Row1, Col, NB1),
+    NewBoard = [Row | NB1].            
 
-% valid_moves(GameState, Player, ListOfMoves) :- 
 
 % valid_moves_aux(Board, ListOfMoves).
 valid_moves_aux(Board, ListOfMoves) :- 
@@ -48,20 +61,10 @@ valid_moves_aux([[_ | Pieces] | Lines], Row, Col, ListOfMoves) :-
     Col1 is Col + 1,
     valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves).
 
-
-insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
-insert_piece([Member | Rest], Piece, Position, Result) :- 
-    Position1 is Position-1,
-    insert_piece(Rest, Piece, Position1, R1),
-    Result = [Member | R1].
-insert_piece([Row | Rest], Piece, 0, Col, NewBoard) :- 
-    insert_piece(Row, Piece, Col, NewRow), 
-    NewBoard = [NewRow | Rest], 
-    !.
-insert_piece([Row | Rest], Piece, R, Col, NewBoard) :- 
-    Row1 is R-1,
-    insert_piece(Rest, Piece, Row1, Col, NB1),
-    NewBoard = [Row | NB1].
+% valid_moves(+GameState, +Player, -ListOfMoves) 
+valid_moves(GameState, _, ListOfMoves) :-
+    get_board(GameState, Board),
+    valid_moves_aux(Board, ListOfMoves).
     
 
 % choose_move(+GameState, +Player, +Level, -Move)
