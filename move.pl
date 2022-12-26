@@ -62,25 +62,6 @@ insert_piece([Row | Rest], Piece, R, Col, NewBoard) :-
     Row1 is R-1,
     insert_piece(Rest, Piece, Row1, Col, NB1),
     NewBoard = [Row | NB1].
-
-
-% get_free_positions_aux(+Line, +LineCounter, +ColumnCounter, -FreePositions)
-get_free_positions_aux([], _, _, []).
-get_free_positions_aux([e | Rest], LineCounter, ColumnCounter, FreePositions) :-
-    ColumnCounterAux is ColumnCounter + 1,
-    get_free_positions_aux(Rest, LineCounter, ColumnCounterAux, FreePositionsAux),
-    FreePositions = [[LineCounter, ColumnCounter] | FreePositionsAux],
-    !.
-get_free_positions_aux([_ | Rest], LineCounter, ColumnCounter, FreePositions) :-
-    ColumnCounterAux is ColumnCounter + 1,
-    get_free_positions_aux(Rest, LineCounter, ColumnCounterAux, FreePositions).
-
-% get_free_positions(+Board, +LineCounter, -FreePositions)
-get_free_positions([], _, []).
-get_free_positions([Line | Rest], LineCounter, FreePositions) :-
-    get_free_positions_aux(Line, LineCounter, 0, FreePositionsAux1),
-    LineCounterAux is LineCounter + 1,
-    get_free_positions(Rest, LineCounterAux, FreePositionsAux2),
-    append(FreePositionsAux1, FreePositionsAux2, FreePositions).
+    
 
 % choose_move(+GameState, +Player, +Level, -Move)
