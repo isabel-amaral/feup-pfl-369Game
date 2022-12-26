@@ -1,3 +1,6 @@
+:- use_module(library(lists)).
+:- use_module(library(random)).
+
 /*
 read_move(Line, Column) :- 
     read(N-L),
@@ -26,7 +29,7 @@ read_move_until_valid(Size, Move):-
     Column >= 0,
     Column =< Size-1,
     Move = [Row, Column],
-    !.  
+    !.           
 
     
 insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
@@ -68,3 +71,9 @@ valid_moves(GameState, _, ListOfMoves) :-
     
 
 % choose_move(+GameState, +Player, +Level, -Move)
+choose_move(GameState, Player, 1, [Line, Column]) :-
+    valid_moves(GameState, Player, FreePositions),
+    length(FreePositions, Size),
+    Upper is Size - 1,
+    random(0, Upper, Choice),
+    nth0(Choice, FreePositions, [Line, Column]).
