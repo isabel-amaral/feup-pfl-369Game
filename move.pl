@@ -70,6 +70,33 @@ valid_moves(GameState, _, ListOfMoves) :-
     valid_moves_aux(Board, ListOfMoves).
     
 
+% count_pieces_in_line(+Line, +Player, -Number)
+count_pieces_in_line([], _, 0).
+count_pieces_in_line([Player | Rest], Player, Number) :-
+    count_pieces_in_line(Rest, Player, NumberAux),
+    Number is NumberAux + 1,
+    !.
+count_pieces_in_line([_ | Rest], Player, Number) :-
+    count_pieces_in_line(Rest, Player, Number).
+
+% value_line(+Line, +Player, -Value)
+value_line(Line, Player, Value) :-
+    count_pieces_in_line(Line, Player, Number),
+    Number = 2,
+    Value is 1, 
+    !.
+value_line(Line, Player, Value) :-
+    count_pieces_in_line(Line, Player, Number),
+    Number = 5,
+    Value is 2, 
+    !.
+value_line(Line, Player, Value) :-
+    count_pieces_in_line(Line, Player, Number),
+    Number = 8,
+    Value is 3,
+    !.
+value_line(_, _, 0).
+
 % choose_move(+GameState, +Player, +Level, -Move)
 choose_move(GameState, Player, 1, [Line, Column]) :-
     valid_moves(GameState, Player, FreePositions),
