@@ -20,15 +20,12 @@ read_move(Row, Column) :-
     Row is R-1,
     Column is C-1.
 
-read_move_until_valid(Size, Move):- 
+read_move_until_valid(ListOfValidMoves, Move):- 
     repeat,
     write('Insert your move in Row-Column format'), nl,
     read_move(Row, Column),
-    Row >= 0,
-    Row =< Size-1,
-    Column >= 0,
-    Column =< Size-1,
     Move = [Row, Column],
+    member(Move, ListOfValidMoves),
     !.           
 
     
