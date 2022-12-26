@@ -1,4 +1,6 @@
 :- consult('utils.pl').
+:- consult('display.pl').
+:- consult('move.pl').
 
 % create_board_line(+Counter, -Line)
 create_board_line(0, []).
