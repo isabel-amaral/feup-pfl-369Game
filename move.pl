@@ -181,24 +181,24 @@ update_board([BoardSize, _, WhitePlayer, BlackPlayer, NextPlayer], NewBoard, New
     NewGameState = [BoardSize, NewBoard, WhitePlayer, BlackPlayer, NextPlayer].
 
 % update_points(+GameState, +Move, -NewGameState)
-update_points([Size, Board, WPoints, BPoints, b], Move, NewGameState) :- 
+update_points([Size, Board, WPoints, BPoints, w], Move, NewGameState) :- 
     row_points(Board, Player, Move, RowPoints),
     column_points(Board, Player, Move, ColumnPoints),
     diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
     diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
     Points is WPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
-    NewGameState = [Size, Board, Points, BPoints, b].
-update_points([Size, Board, WPoints, BPoints, p], Move, NewGameState) :- 
+    NewGameState = [Size, Board, Points, BPoints, w].
+update_points([Size, Board, WPoints, BPoints, b], Move, NewGameState) :- 
     row_points(Board, Player, Move, RowPoints),
     column_points(Board, Player, Move, ColumnPoints),
     diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
     diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
     Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
-    NewGameState = [Size, Board, WPoints, Points, p].
+    NewGameState = [Size, Board, WPoints, Points, b].
 
 % update_next_player(+GameState, -NewGameState)
-update_next_player([Size, Board, WPoints, BPoints, b], [Size,Board, WPoints, BPoints, p]).
-update_next_player([Size, Board, WPoints, BPoints, p], [Size,Board, WPoints, BPoints, b]).
+update_next_player([Size, Board, WPoints, BPoints, w], [Size,Board, WPoints, BPoints, b]).
+update_next_player([Size, Board, WPoints, BPoints, b], [Size,Board, WPoints, BPoints, w]).
 
 % move(+GameState, +Move, -NewGameState) 
 move(GameState, [Row, Column], NewGameState) :- 
