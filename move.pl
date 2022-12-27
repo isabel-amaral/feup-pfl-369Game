@@ -173,3 +173,19 @@ choose_move(GameState, Player, 1, [Line, Column]) :-
     Upper is Size - 1,
     random(0, Upper, Choice),
     nth0(Choice, FreePositions, [Line, Column]).
+
+%update_points(+GameState, +Move, -NewGameState)
+update_points([Size, Board, WPoints, BPoints, b], Move, NewGameState) :- 
+    row_points(Board, Player, Move, RowPoints),
+    column_points(Board, Player, Move, ColumnPoints),
+    diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
+    diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
+    Points is WPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
+    NewGameState = [Size, Board, Points, BPoints, b].
+update_points([Size, Board, WPoints, BPoints, p], Move, NewGameState) :- 
+    row_points(Board, Player, Move, RowPoints),
+    column_points(Board, Player, Move, ColumnPoints),
+    diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
+    diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
+    Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
+    NewGameState = [Size, Board, WPoints, Points, p].
