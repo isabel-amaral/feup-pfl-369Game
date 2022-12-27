@@ -21,21 +21,26 @@ valid_moves(GameState, _, ListOfMoves) :-
     valid_moves_aux(Board, ListOfMoves).
 
 
-% valid_moves_in_line_aux(+Line, +LineCounter, -ListOfMoves)
-valid_moves_in_line_aux([], _, []).
-valid_moves_in_line_aux([e | Rest], LineCounter, ListOfMoves) :-
+% valid_moves_in_sequence(+Line, +LineCounter, -ListOfMoves)
+valid_moves_in_sequence([], _, []).
+valid_moves_in_sequence([e | Rest], LineCounter, ListOfMoves) :-
     LineCounterAux is LineCounter + 1,
-    valid_moves_in_line_aux(Rest, LineCounterAux, ListOfMovesAux),
+    valid_moves_in_sequence(Rest, LineCounterAux, ListOfMovesAux),
     ListOfMoves = [LineCounter | ListOfMovesAux],
     !.
-valid_moves_in_line_aux([_ | Rest], LineCounter, ListOfMoves) :-
+valid_moves_in_sequence([_ | Rest], LineCounter, ListOfMoves) :-
     LineCounterAux is LineCounter + 1,
-    valid_moves_in_line_aux(Rest, LineCounterAux, ListOfMoves).
+    valid_moves_in_sequence(Rest, LineCounterAux, ListOfMoves).
 
 % valid_moves_in_line(+Board, +LineIndex, -ListOfMoves)
 valid_moves_in_line(Board, LineIndex, ListOfMoves) :-
     nth0(LineIndex, Board, Line),
-    valid_moves_in_line_aux(Line, 0, ListOfMoves).
+    valid_moves_in_sequence(Line, 0, ListOfMoves).
+
+% valid_moves_in_col(+Board, +ColumnIndex, -ListOfMoves)
+valid_moves_in_col(Board, ColumnIndex, ListOfMoves) :-
+    get_column(ColumnIndex, Board, Column),
+    valid_moves_in_sequence(Column, 0, ListOfMoves).
 
 
 % insert_piece_into_row(+Row, +Piece, +Position, -NewRow)
