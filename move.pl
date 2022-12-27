@@ -208,3 +208,22 @@ move(GameState, [Row, Column], NewGameState) :-
     update_board(GameState, NewBoard, NewGameState1),
     update_points(NewGameState1, [Row, Column], NewGameState2),
     update_next_player(NewGameState2, NewGameState).
+
+% game_over(+GameState, -Winner)
+game_over(GameState, Winner) :- 
+    get_next_player(GameState, Player),
+    valid_moves(GameState, Player, FreePositions),
+    get_white_player_pontuation(GameState, WPoints),
+    get_black_player_pontuation(GameState, BPoints),
+    game_over_aux(FreePositions, WPoints, BPoints, Winner).
+
+% game_over_aux(+FreePositions, +WPoints, +BPoints, -Winner)
+game_over_aux([], WPoints, BPoints, Winner) :-
+    WPoints > BPoints,
+    Winner = w,
+    !.
+game_over_aux([], WPoints, BPoints, Winner) :-
+    BPoints > WPoints,
+    Winner = b,
+    !.
+game_over_aux([], _, _, t).
