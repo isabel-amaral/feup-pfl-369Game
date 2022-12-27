@@ -34,27 +34,27 @@ get_diagonal1([Row, Column], Board, Size, Diagonal) :-
     DiagonalStart = [Row1, 0],
     get_diagonal1_aux(DiagonalStart, Board, Size, Diagonal).
 
-
 %get_diagonal1_aux(+Position, +Board, +Size, Diagonal)
-get_diagonal1_aux([R, Column], Board, Size, Diagonal) :-
+get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Size1 is Size-1,
-    Column == Size1,  
+    C == Size1,  
     nth0(R, Board, Row),
-    nth0(Column, Row, Piece),
+    nth0(C, Row, Piece),
     Diagonal = [Piece],
     !.
-get_diagonal1_aux([R, Column], Board, Size, Diagonal) :-
+get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Size1 is Size-1,
     R == Size1,
     nth0(R, Board, Row),
-    nth0(Column, Row, Piece),
+    nth0(C, Row, Piece),
     Diagonal = [Piece],
     !.
-get_diagonal1_aux([R, Column], Board, Size, Diagonal) :-
+get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     nth0(R, Board, Row),
-    nth0(Column, Row, Piece),
+    nth0(C, Row, Piece),
     R1 is R+1,
-    Column1 is Column+1,
-    NewPosition = [R1, Column1],
+    C1 is C+1,
+    NewPosition = [R1, C1],
     get_diagonal1_aux(NewPosition, Board, Size, Diagonal1),
     Diagonal = [Piece | Diagonal1].
+
