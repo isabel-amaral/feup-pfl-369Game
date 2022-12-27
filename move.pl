@@ -25,19 +25,21 @@ read_move_until_valid(ListOfValidMoves, Move):-
     member(Move, ListOfValidMoves),
     !.           
 
-    
-insert_piece([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
-insert_piece([Member | Rest], Piece, Position, Result) :- 
+% insert_piece_into_row(+Row, +Piece, +Position, -NewRow)
+insert_piece_into_row([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
+insert_piece_into_row([Member | Rest], Piece, Position, Result) :- 
     Position1 is Position-1,
-    insert_piece(Rest, Piece, Position1, R1),
+    insert_piece_into_row(Rest, Piece, Position1, R1),
     Result = [Member | R1].
-insert_piece([Row | Rest], Piece, 0, Col, NewBoard) :- 
-    insert_piece(Row, Piece, Col, NewRow), 
+
+%insert_piece_into_board(+Board, +Piece, +Row, +Column, -NewBoard)
+insert_piece_into_board([Row | Rest], Piece, 0, Col, NewBoard) :- 
+    insert_piece_into_row(Row, Piece, Col, NewRow), 
     NewBoard = [NewRow | Rest], 
     !.
-insert_piece([Row | Rest], Piece, R, Col, NewBoard) :- 
+insert_piece_into_board([Row | Rest], Piece, R, Col, NewBoard) :- 
     Row1 is R-1,
-    insert_piece(Rest, Piece, Row1, Col, NB1),
+    insert_piece_into_board(Rest, Piece, Row1, Col, NB1),
     NewBoard = [Row | NB1].            
 
 
@@ -202,7 +204,7 @@ update_next_player([Size, Board, WPoints, BPoints, p], [Size,Board, WPoints, BPo
 move(GameState, [Row, Column], NewGameState) :- 
     get_next_player(GameState, Player),
     get_board(GameState, Board),
-    insert_piece(Board, Player, Row, Column, NewBoard),
+    insert_piece_into_board(Board, Player, Row, Column, NewBoard),
     update_board(GameState, NewBoard, NewGameState1),
     update_points(NewGameState1, [Row, Column], NewGameState2),
     update_next_player(NewGameState2, NewGameState).
