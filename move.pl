@@ -189,3 +189,7 @@ update_points([Size, Board, WPoints, BPoints, p], Move, NewGameState) :-
     diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
     Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
     NewGameState = [Size, Board, WPoints, Points, p].
+
+%update_next_player(+GameState, -NewGameState)
+update_next_player([Size, Board, WPoints, BPoints, b], [Size,Board, WPoints, BPoints, p]).
+update_next_player([Size, Board, WPoints, BPoints, p], [Size,Board, WPoints, BPoints, b]).
