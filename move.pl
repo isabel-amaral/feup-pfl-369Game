@@ -111,9 +111,28 @@ value_lines([Line | Rest], BestLine, LineCounter, Player, Number) :-
     BestLine is BestLineAux,
     !.
 value_lines([Line | _], BestLine, LineCounter, Player, Number) :-
-    value_line(Line, Player, NumberAux),
-    Number is NumberAux,
+    value_line(Line, Player, Number),
     BestLine is LineCounter.
+
+% value_columns(+Board, +BoardSize, -Column, +Player, -Number)
+value_columns(Board, BoardSize, BestColumn, Player, Number) :-
+    value_columns(Board, BoardSize, BestColumn, 0, Player, Number).
+value_columns(_, BoardSize, BestColumn, BoardSize, _, 0) :-
+    BestColumn is BoardSize.
+value_columns(Board, BoardSize, BestColumn, ColumnCounter, Player, Number) :-
+    get_column(Board, ColumnCounter, Column),
+    value_line(Column, Player, NumberAux1),
+    ColumnCounterAux is ColumnCounter + 1,
+    value_columns(Board, BoardSize, BestColumnAux, ColumnCounterAux, Player, NumberAux2),
+    NumberAux1 < NumberAux2,
+    Number is NumberAux2,
+    BestColumn is BestColumnAux,
+    !.
+value_columns(Board, _, BestColumn, ColumnCounter, Player, Number) :-
+    get_column(Board, ColumnCounter, Column),
+    value_line(Column, Player, NumberAux),
+    Number is NumberAux,
+    BestColumn is ColumnCounter.
 
 % choose_move(+GameState, +Player, +Level, -Move)
 choose_move(GameState, Player, 1, [Line, Column]) :-
