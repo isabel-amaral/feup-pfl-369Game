@@ -58,6 +58,7 @@ column_points(Board, Player, [_,C], Points) :-
 points([], _, 3, 1) :- !. 
 points([], _, 6, 2) :- !. 
 points([], _, 9, 3) :- !. 
+points([], _, AuxPoints, 0) :- !.
 points([Player | Rest], Player, AuxPoints, Points) :- 
     AuxPoints1 is AuxPoints + 1,
     points(Rest, Player, AuxPoints1, Points), 
