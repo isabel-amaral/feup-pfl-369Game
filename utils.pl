@@ -34,7 +34,7 @@ get_diagonal1([Row, Column], Board, Size, Diagonal) :-
     DiagonalStart = [Row1, 0],
     get_diagonal1_aux(DiagonalStart, Board, Size, Diagonal).
 
-% get_diagonal1_aux(+Position, +Board, +Size, Diagonal)
+% get_diagonal1_aux(+Position, +Board, +Size, -Diagonal)
 get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Size1 is Size-1,
     C == Size1,  
@@ -71,7 +71,7 @@ get_diagonal2([Row, Column], Board, Size, Diagonal) :-
     DiagonalStart = [Row1, Column1],
     get_diagonal2_aux(DiagonalStart, Board, Size, Diagonal).
 
-% get_diagonal2_aux(+Position, +Board, +Size, Diagonal)
+% get_diagonal2_aux(+Position, +Board, +Size, -Diagonal)
 get_diagonal2_aux([R, C], Board, _, Diagonal) :-
     C == 0,  
     nth0(R, Board, Row),
