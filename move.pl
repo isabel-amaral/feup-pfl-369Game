@@ -197,3 +197,12 @@ update_points([Size, Board, WPoints, BPoints, p], Move, NewGameState) :-
 % update_next_player(+GameState, -NewGameState)
 update_next_player([Size, Board, WPoints, BPoints, b], [Size,Board, WPoints, BPoints, p]).
 update_next_player([Size, Board, WPoints, BPoints, p], [Size,Board, WPoints, BPoints, b]).
+
+% move(+GameState, +Move, -NewGameState) 
+move(GameState, [Row, Column], NewGameState) :- 
+    get_next_player(GameState, Player),
+    get_board(GameState, Board),
+    insert_piece(Board, Player, Row, Column, NewBoard),
+    update_board(GameState, NewBoard, NewGameState1),
+    update_points(NewGameState1, [Row, Column], NewGameState2),
+    update_next_player(NewGameState2, NewGameState).
