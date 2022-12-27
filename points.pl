@@ -85,10 +85,10 @@ value_lines([Line | _], BestLine, LineCounter, Player, Points) :-
 % value_columns(+Board, +BoardSize, -Column, +Player, -Points)
 value_columns(Board, BoardSize, BestColumn, Player, Points) :-
     value_columns(Board, BoardSize, BestColumn, 0, Player, Points).
-value_columns(_, BoardSize, BestColumn, BoardSize, _, 0) :-
+value_columns(_, BoardSize, BestColumn, BoardSize-1, _, 0) :-
     BestColumn is BoardSize.
 value_columns(Board, BoardSize, BestColumn, ColumnCounter, Player, Points) :-
-    get_column(Board, ColumnCounter, Column),
+    get_column(ColumnCounter, Board, Column),
     value_line(Column, Player, PointsAux1),
     ColumnCounterAux is ColumnCounter + 1,
     value_columns(Board, BoardSize, BestColumnAux, ColumnCounterAux, Player, PointsAux2),
@@ -97,7 +97,7 @@ value_columns(Board, BoardSize, BestColumn, ColumnCounter, Player, Points) :-
     BestColumn is BestColumnAux,
     !.
 value_columns(Board, _, BestColumn, ColumnCounter, Player, Points) :-
-    get_column(Board, ColumnCounter, Column),
+    get_column(ColumnCounter, Board, Column),
     value_line(Column, Player, PointsAux),
     Points is PointsAux,
     BestColumn is ColumnCounter.
