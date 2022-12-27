@@ -17,15 +17,12 @@ read_move(Row, Column) :-
     Row is R-1,
     Column is C-1.
 
-read_move_until_valid(Size, Move):- 
+read_move_until_valid(ListOfValidMoves, Move):- 
     repeat,
     write('Insert your move in Row-Column format'), nl,
     read_move(Row, Column),
-    Row >= 0,
-    Row =< Size-1,
-    Column >= 0,
-    Column =< Size-1,
     Move = [Row, Column],
+    member(Move, ListOfValidMoves),
     !.           
 
     
@@ -65,6 +62,28 @@ valid_moves_aux([[_ | Pieces] | Lines], Row, Col, ListOfMoves) :-
 valid_moves(GameState, _, ListOfMoves) :-
     get_board(GameState, Board),
     valid_moves_aux(Board, ListOfMoves).
+
+
+% row_points(+Board, +Player, +Move, -Points)
+row_points(Board, Player, [R,_], Points) :- 
+    nth0(R, Board, Row),
+    points(Row, Player, 0, Points).
+
+% column_points(+Board, +Player, +Move, -Points)
+column_points(Board, Player, [_,C], Points) :-
+    get_column(C, Board, Column),
+    points(Column, Player, 0, Points).
+
+% points(+Sequence, +Player, +AuxPoints, -Points)
+points([], _, 3, 1) :- !. 
+points([], _, 6, 2) :- !. 
+points([], _, 9, 3) :- !. 
+points([Player | Rest], Player, AuxPoints, Points) :- 
+    AuxPoints1 is AuxPoints + 1,
+    points(Rest, Player, AuxPoints1, Points), 
+    !.
+points([_ | Rest], Player, AuxPoints, Points) :-
+    points(Rest, Player, AuxPoints, Points).
     
 
 % count_pieces_in_line(+Line, +Player, -Number)
