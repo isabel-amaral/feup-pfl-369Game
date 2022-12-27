@@ -100,7 +100,16 @@ row_points(Board, Player, [R, _], Points) :-
 column_points(Board, Player, [_, C], Points) :-
     get_column(C, Board, Column),
     points(Column, Player, Points).
-    
+
+%diagonal1_points(+Board, +Player, +Move, +Size, -Points)
+diagonal1_points(Board, Player, Move, Size, Points) :-
+    get_diagonal1(Move, Board, Size, Diagonal),
+    points(Diagonal, Player, 0, Points).
+
+%diagonal2_points(+Board, +Player, +Move, +Size, -Points)
+diagonal2_points(Board, Player, Move, Size, Points) :-
+    get_diagonal2(Move, Board, Size, Diagonal),
+    points(Diagonal, Player, 0, Points).
 
 % value_line(+Line, +Player, -Value)
 value_line(Line, Player, Value) :-
