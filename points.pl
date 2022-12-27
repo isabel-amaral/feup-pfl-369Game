@@ -65,39 +65,39 @@ value_line(Line, Player, Value) :-
     !.
 value_line(_, _, 0).
 
-% value_lines(+Board, -Line, +Player, -Number)
-value_lines(Board, BestLine, Player, Number) :- 
-    value_lines(Board, BestLine, 0, Player, Number).
+% value_lines(+Board, -Line, +Player, -Points)
+value_lines(Board, BestLine, Player, Points) :- 
+    value_lines(Board, BestLine, 0, Player, Points).
 value_lines([], BestLine, LineCounter, _, 0) :-
     BestLine is LineCounter.
-value_lines([Line | Rest], BestLine, LineCounter, Player, Number) :-
-    value_line(Line, Player, NumberAux1),
+value_lines([Line | Rest], BestLine, LineCounter, Player, Points) :-
+    value_line(Line, Player, PointsAux1),
     LineCounterAux is LineCounter + 1,
-    value_lines(Rest, BestLineAux, LineCounterAux, Player, NumberAux2),
-    NumberAux1 < NumberAux2,
-    Number is NumberAux2,
+    value_lines(Rest, BestLineAux, LineCounterAux, Player, PointsAux2),
+    PointsAux1 < PointsAux2,
+    Points is PointsAux2,
     BestLine is BestLineAux,
     !.
-value_lines([Line | _], BestLine, LineCounter, Player, Number) :-
-    value_line(Line, Player, Number),
+value_lines([Line | _], BestLine, LineCounter, Player, Points) :-
+    value_line(Line, Player, Points),
     BestLine is LineCounter.
 
-% value_columns(+Board, +BoardSize, -Column, +Player, -Number)
-value_columns(Board, BoardSize, BestColumn, Player, Number) :-
-    value_columns(Board, BoardSize, BestColumn, 0, Player, Number).
+% value_columns(+Board, +BoardSize, -Column, +Player, -Points)
+value_columns(Board, BoardSize, BestColumn, Player, Points) :-
+    value_columns(Board, BoardSize, BestColumn, 0, Player, Points).
 value_columns(_, BoardSize, BestColumn, BoardSize, _, 0) :-
     BestColumn is BoardSize.
-value_columns(Board, BoardSize, BestColumn, ColumnCounter, Player, Number) :-
+value_columns(Board, BoardSize, BestColumn, ColumnCounter, Player, Points) :-
     get_column(Board, ColumnCounter, Column),
-    value_line(Column, Player, NumberAux1),
+    value_line(Column, Player, PointsAux1),
     ColumnCounterAux is ColumnCounter + 1,
-    value_columns(Board, BoardSize, BestColumnAux, ColumnCounterAux, Player, NumberAux2),
-    NumberAux1 < NumberAux2,
-    Number is NumberAux2,
+    value_columns(Board, BoardSize, BestColumnAux, ColumnCounterAux, Player, PointsAux2),
+    PointsAux1 < PointsAux2,
+    Points is PointsAux2,
     BestColumn is BestColumnAux,
     !.
-value_columns(Board, _, BestColumn, ColumnCounter, Player, Number) :-
+value_columns(Board, _, BestColumn, ColumnCounter, Player, Points) :-
     get_column(Board, ColumnCounter, Column),
-    value_line(Column, Player, NumberAux),
-    Number is NumberAux,
+    value_line(Column, Player, PointsAux),
+    Points is PointsAux,
     BestColumn is ColumnCounter.
