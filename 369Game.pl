@@ -3,6 +3,8 @@
 
 :- consult('utils.pl').
 :- consult('display.pl').
+:- consult('input.pl').
+:- consult('points.pl').
 :- consult('move.pl').
 
 % create_board_line(+Counter, -Line)
@@ -23,6 +25,7 @@ create_board(Size, Counter, Board) :-
     create_board(Size, CounterAux, BoardAux),
     create_board_line(Size, Line),
     Board = [Line | BoardAux].
+
 
 % GameState is saved in the format [BoardSize, Board, WhitePlayer, BlackPlayer, NextPlayer]
 % initial_state(+Size, -GameState)
