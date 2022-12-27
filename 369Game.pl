@@ -1,3 +1,6 @@
+:- use_module(library(lists)).
+:- use_module(library(random)).
+
 :- consult('utils.pl').
 :- consult('display.pl').
 :- consult('move.pl').

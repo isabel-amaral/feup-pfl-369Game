@@ -1,6 +1,3 @@
-:- use_module(library(lists)).
-:- use_module(library(random)).
-
 /*
 read_move(Line, Column) :- 
     read(N-L),
