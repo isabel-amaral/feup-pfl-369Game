@@ -18,6 +18,12 @@ display_column_tags(BoardSize, Counter) :-
 
 % display_line(+Line)
 display_line([]) :- write('|').
+display_line([e | Rest]) :-
+    write('| '),
+    write(' '),
+    write(' '),    
+    display_line(Rest),
+    !.
 display_line([Column | Rest]) :-
     write('| '),
     write(Column),
@@ -40,8 +46,10 @@ display_game_aux(BoardSize, [Line | Rest], Counter) :-
     display_game_aux(BoardSize, Rest, CounterAux).
 
 /* TODO: Change in order to receive game state */
-% display_game(+BoardSize, +Board)
-display_game(BoardSize, Board) :-
+% display_game(+GameState)
+display_game(GameState) :-
+    get_board_size(GameState, BoardSize),
+    get_board(GameState, Board),
     nl,
     write('  '),
     display_column_tags(BoardSize, 0),
