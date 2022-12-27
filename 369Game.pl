@@ -32,4 +32,26 @@ create_board(Size, Counter, Board) :-
 initial_state(Size, [Size, Board, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
+
+% game_over_aux(+WhitePoints, +BlackPoints, -Winner)
+game_over_aux(WPoints, BPoints, Winner) :-
+    WPoints > BPoints,
+    Winner = w,
+    !.
+game_over_aux(WPoints, BPoints, Winner) :-
+    BPoints > WPoints,
+    Winner = b,
+    !.
+game_over_aux( _, _, t).
+
+% game_over(+GameState, -Winner)
+game_over(GameState, Winner) :- 
+    get_next_player(GameState, Player),
+    valid_moves(GameState, Player, FreePositions),
+    length(FreePositions, 0),
+    get_white_player_pontuation(GameState, WPoints),
+    get_black_player_pontuation(GameState, BPoints),
+    game_over_aux(WPoints, BPoints, Winner).
+
+
 % play/0
