@@ -21,6 +21,23 @@ valid_moves(GameState, _, ListOfMoves) :-
     valid_moves_aux(Board, ListOfMoves).
 
 
+% valid_moves_in_line_aux(+Line, +LineCounter, -ListOfMoves)
+valid_moves_in_line_aux([], _, []).
+valid_moves_in_line_aux([e | Rest], LineCounter, ListOfMoves) :-
+    LineCounterAux is LineCounter + 1,
+    valid_moves_in_line_aux(Rest, LineCounterAux, ListOfMovesAux),
+    ListOfMoves = [LineCounter | ListOfMovesAux],
+    !.
+valid_moves_in_line_aux([_ | Rest], LineCounter, ListOfMoves) :-
+    LineCounterAux is LineCounter + 1,
+    valid_moves_in_line_aux(Rest, LineCounterAux, ListOfMoves).
+
+% valid_moves_in_line(+Board, +LineIndex, -ListOfMoves)
+valid_moves_in_line(Board, LineIndex, ListOfMoves) :-
+    nth0(LineIndex, Board, Line),
+    valid_moves_in_line_aux(Line, 0, ListOfMoves).
+
+
 % insert_piece_into_row(+Row, +Piece, +Position, -NewRow)
 insert_piece_into_row([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
 insert_piece_into_row([Member | Rest], Piece, Position, Result) :- 
