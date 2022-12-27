@@ -44,6 +44,28 @@ insert_piece([Row | Rest], Piece, R, Col, NewBoard) :-
     NewBoard = [Row | NB1].            
 
 
+%row_points(+Board, +Player, +Move, -Points)
+row_points(Board, Player, [R,_], Points) :- 
+    nth0(R, Board, Row),
+    points(Row, Player, 0, Points).
+
+%column_points(+Board, +Player, +Move, -Points)
+column_points(Board, Player, [_,C], Points) :-
+    column(C, Board, Column),
+    points(Column, Player, 0, Points).
+
+%points(+Sequence, +Player, +AuxPoints, -Points)
+points([], _, 3, 1) :- !. 
+points([], _, 6, 2) :- !. 
+points([], _, 9, 3) :- !. 
+points([Player | Rest], Player, AuxPoints, Points) :- 
+    AuxPoints1 is AuxPoints + 1,
+    points(Rest, Player, AuxPoints1, Points), 
+    !.
+points([_ | Rest], Player, AuxPoints, Points) :-
+    points(Rest, Player, AuxPoints, Points).
+
+
 % valid_moves_aux(Board, ListOfMoves).
 valid_moves_aux(Board, ListOfMoves) :- 
     valid_moves_aux(Board, 0, 0, ListOfMoves).
