@@ -1,5 +1,3 @@
-:- use_module(library(lists)).
-
 % GameState is saved in the format [BoardSize, Board, WhitePlayer, BlackPlayer, NextPlayer]
 
 % get_board_size(+GameState, -BoardSize)
