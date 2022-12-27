@@ -97,6 +97,24 @@ value_line(Line, Player, Value) :-
     !.
 value_line(_, _, 0).
 
+% value_lines(+Board, -Line, +Player, -Number)
+value_lines(Board, BestLine, Player, Number) :- 
+    value_lines(Board, BestLine, 0, Player, Number).
+value_lines([], BestLine, LineCounter, _, 0) :-
+    BestLine is LineCounter.
+value_lines([Line | Rest], BestLine, LineCounter, Player, Number) :-
+    value_line(Line, Player, NumberAux1),
+    LineCounterAux is LineCounter + 1,
+    value_lines(Rest, BestLineAux, LineCounterAux, Player, NumberAux2),
+    NumberAux1 < NumberAux2,
+    Number is NumberAux2,
+    BestLine is BestLineAux,
+    !.
+value_lines([Line | _], BestLine, LineCounter, Player, Number) :-
+    value_line(Line, Player, NumberAux),
+    Number is NumberAux,
+    BestLine is LineCounter.
+
 % choose_move(+GameState, +Player, +Level, -Move)
 choose_move(GameState, Player, 1, [Line, Column]) :-
     valid_moves(GameState, Player, FreePositions),
