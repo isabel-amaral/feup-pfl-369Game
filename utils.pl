@@ -1,3 +1,5 @@
+:- use_module(library(lists)).
+
 % GameState is saved in the format [BoardSize, Board, WhitePlayer, BlackPlayer, NextPlayer]
 
 % get_board_size(+GameState, -BoardSize)
@@ -14,3 +16,10 @@ get_black_player_pontuation([_, _, _, BlackPlayer, _], BlackPlayer).
 
 % get_next_player(+GameState, -NextPlayer)
 get_next_player([_, _, _, _, NextPlayer], NextPlayer).
+
+%column(+ColumnIndex, +Board, -Column)
+column(_, [], []) :- !.
+column(ColumnIndex, [Row | Rows], Column) :- 
+    nth0(ColumnIndex, Row, Piece),
+    column(ColumnIndex, Rows, Column1),
+    Column = [Piece | Column1].
