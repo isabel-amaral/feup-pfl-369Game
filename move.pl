@@ -64,28 +64,6 @@ valid_moves(GameState, _, ListOfMoves) :-
     valid_moves_aux(Board, ListOfMoves).
 
 
-% row_points(+Board, +Player, +Move, -Points)
-row_points(Board, Player, [R,_], Points) :- 
-    nth0(R, Board, Row),
-    points(Row, Player, 0, Points).
-
-% column_points(+Board, +Player, +Move, -Points)
-column_points(Board, Player, [_,C], Points) :-
-    get_column(C, Board, Column),
-    points(Column, Player, 0, Points).
-
-% points(+Sequence, +Player, +AuxPoints, -Points)
-points([], _, 3, 1) :- !. 
-points([], _, 6, 2) :- !. 
-points([], _, 9, 3) :- !. 
-points([Player | Rest], Player, AuxPoints, Points) :- 
-    AuxPoints1 is AuxPoints + 1,
-    points(Rest, Player, AuxPoints1, Points), 
-    !.
-points([_ | Rest], Player, AuxPoints, Points) :-
-    points(Rest, Player, AuxPoints, Points).
-    
-
 % count_pieces_in_line(+Line, +Player, -Number)
 count_pieces_in_line([], _, 0).
 count_pieces_in_line([Player | Rest], Player, Number) :-
@@ -94,6 +72,35 @@ count_pieces_in_line([Player | Rest], Player, Number) :-
     !.
 count_pieces_in_line([_ | Rest], Player, Number) :-
     count_pieces_in_line(Rest, Player, Number).
+
+% points(+Sequence, +Player, -Points)
+points(Sequence, Player, Points) :-
+    count_pieces_in_line(Sequence, Player, Number),
+    Number = 3,
+    Points = 1,
+    !.
+points(Sequence, Player, Points) :-
+    count_pieces_in_line(Sequence, Player, Number),
+    Number = 6,
+    Points = 2,
+    !.
+points(Sequence, Player, Points) :-
+    count_pieces_in_line(Sequence, Player, Number),
+    Number = 9,
+    Points = 3,
+    !.
+points(_, _, 0).
+
+% row_points(+Board, +Player, +Move, -Points)
+row_points(Board, Player, [R, _], Points) :- 
+    nth0(R, Board, Row),
+    points(Row, Player, Points).
+
+% column_points(+Board, +Player, +Move, -Points)
+column_points(Board, Player, [_, C], Points) :-
+    get_column(C, Board, Column),
+    points(Column, Player, Points).
+    
 
 % value_line(+Line, +Player, -Value)
 value_line(Line, Player, Value) :-
