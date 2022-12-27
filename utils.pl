@@ -14,3 +14,11 @@ get_black_player_pontuation([_, _, _, BlackPlayer, _], BlackPlayer).
 
 % get_next_player(+GameState, -NextPlayer)
 get_next_player([_, _, _, _, NextPlayer], NextPlayer).
+
+
+% get_column(+Board, +ColumnIndex, -Column)
+get_column([], _, []).
+get_column([Line | Rest], ColumnIndex, Column) :-
+    nth0(ColumnIndex, Line, Item),
+    get_column(Rest, ColumnIndex, ColumnAux),
+    Column = [Item | ColumnAux].
