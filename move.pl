@@ -94,9 +94,31 @@ move(GameState, [Row, Column], NewGameState) :-
     update_next_player(NewGameState2, NewGameState).         
 
 
+% choose_move_aux(+Board, +BestLine, +LinePoints, +BestColumn, +ColumnPoints, -Move)
+choose_move_aux(Board, BestLine, LinePoints, _, ColumnPoints, [Line, Column]) :-
+    LinePoints >= ColumnPoints,
+    Line is BestLine,
+    valid_moves_in_line(Board, BestLine, ListOfMoves),
+    length(ListOfMoves, Size),
+    random(0, Size, Choice),
+    nth0(Choice, ListOfMoves, Column),
+    !.
+choose_move_aux(Board, _, _, BestColumn, _, [Line, Column]) :-
+    Column is BestColumn,
+    valid_moves_in_col(Board, BestColumn, ListOfMoves),
+    length(ListOfMoves, Size),
+    random(0, Size, Choice),
+    nth0(Choice, ListOfMoves, Line).
+
 % choose_move(+GameState, +Player, +Level, -Move)
 choose_move(GameState, Player, 1, [Line, Column]) :-
     valid_moves(GameState, Player, ListOfMoves),
     length(ListOfMoves, Size),
     random(0, Size, Choice),
     nth0(Choice, ListOfMoves, [Line, Column]).
+choose_move(GameState, Player, 2, [Line, Column]) :-
+    get_board(GameState, Board),
+    value_lines(Board, BestLine, Player, LinePoints),
+    get_board_size(GameState, BoardSize),
+    value_columns(Board, BoardSize, BestColumn, Player, ColumnPoints),
+    choose_move_aux(Board, BestLine, LinePoints, BestColumn, ColumnPoints, [Line, Column]).
