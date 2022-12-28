@@ -96,8 +96,7 @@ move(GameState, [Row, Column], NewGameState) :-
 
 % choose_move(+GameState, +Player, +Level, -Move)
 choose_move(GameState, Player, 1, [Line, Column]) :-
-    valid_moves(GameState, Player, FreePositions),
-    length(FreePositions, Size),
-    Upper is Size - 1,
-    random(0, Upper, Choice),
-    nth0(Choice, FreePositions, [Line, Column]).
+    valid_moves(GameState, Player, ListOfMoves),
+    length(ListOfMoves, Size),
+    random(0, Size, Choice),
+    nth0(Choice, ListOfMoves, [Line, Column]).
