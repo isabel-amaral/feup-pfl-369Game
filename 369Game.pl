@@ -49,8 +49,8 @@ game_over(GameState, Winner) :-
     get_next_player(GameState, Player),
     valid_moves(GameState, Player, FreePositions),
     length(FreePositions, 0),
-    get_white_player_pontuation(GameState, WPoints),
-    get_black_player_pontuation(GameState, BPoints),
+    value(GameState, WPoints),
+    value(GameState, BPoints),
     game_over_aux(WPoints, BPoints, Winner).
 
 
