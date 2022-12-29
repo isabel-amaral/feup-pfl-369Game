@@ -136,3 +136,10 @@ value_diagonals(Board, BoardSize, BestPosition, PositionCounter, Player, Points)
     PositionCounterAux is PositionCounter + 1,
     value_diagonals(Board, BoardSize, BestPositionAux, PositionCounterAux, Player, PointsAux2),
     value_diagonals_aux([PositionCounter, Dir], PointsAux1, BestPositionAux, PointsAux2, BestPosition, Points).
+
+
+% value(+GameState, +Player, -Value)
+value(GameState, w, Value) :-
+    get_white_player_pontuation(GameState, Value).
+value(GameState, b, Value) :-
+    get_black_player_pontuation(GameState, Value).
