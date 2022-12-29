@@ -42,6 +42,14 @@ valid_moves_in_col(Board, ColumnIndex, ListOfMoves) :-
     get_column(ColumnIndex, Board, Column),
     valid_moves_in_sequence(Column, 0, ListOfMoves).
 
+% valid_moves_in_diagonal(+Board, +BoardSize, +Diagonal, -ListOfMoves)
+valid_moves_in_diagonal(Board, BoardSize, [StartingColumn, d1], ListOfMoves) :-
+    get_diagonal1([0, StartingColumn], Board, BoardSize, Diagonal),
+    valid_moves_in_sequence(Diagonal, 0, ListOfMoves).
+valid_moves_in_diagonal(Board, BoardSize, [StartingColumn, d2], ListOfMoves) :-
+    get_diagonal2([0, StartingColumn], Board, BoardSize, Diagonal),
+    valid_moves_in_sequence(Diagonal, 0, ListOfMoves).
+
 
 % insert_piece_into_row(+Row, +Piece, +Position, -NewRow)
 insert_piece_into_row([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
