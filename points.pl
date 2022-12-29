@@ -102,35 +102,37 @@ value_columns(Board, _, BestColumn, ColumnCounter, Player, Points) :-
     Points is PointsAux,
     BestColumn is ColumnCounter.
 
-% choose_best_diagonal(+Diagonal1, +Diagonal2, +Player, -Points)
-choose_best_diagonal(Diagonal1, Diagonal2, Player, Points) :-
+% choose_best_diagonal(+Diagonal1, +Diagonal2, +Player, -Dir, -Points)
+choose_best_diagonal(Diagonal1, Diagonal2, Player, Dir, Points) :-
     value_line(Diagonal1, Player, PointsAux1),
     value_line(Diagonal2, Player, PointsAux2),
     PointsAux1 >= PointsAux2,
+    Dir = d1,
     Points is PointsAux1,
     !.
-choose_best_diagonal(_, Diagonal2, Player, Points) :-
-    value_line(Diagonal2, Player, Points).
+choose_best_diagonal(_, Diagonal2, Player, Dir, Points) :-
+    value_line(Diagonal2, Player, Points),
+    Dir = d2.
 
 % value_diagonals_aux(+Position1, +Points1, +Position2, +Points2, -Position, -Points)
 value_diagonals_aux(Position1, Points1, _, Points2, Position, Points) :-
     Points1 >= Points2,
     Points is Points1,
-    Position is Position1,
+    Position = Position1,
     !.
 value_diagonals_aux(_, _, Position2, Points2, Position, Points) :-
     Points is Points2,
-    Position is Position2.
+    Position = Position2.
 
 % value_diagonals(+Board, +BoardSize, -Position, +Player, -Points)
 value_diagonals(Board, BoardSize, BestPosition, Player, Points) :-
     value_diagonals(Board, BoardSize, BestPosition, 0, Player, Points).
 value_diagonals(_, BoardSize, BestPosition, BoardSize, _, 0) :-
-    BestPosition is BoardSize-1.
+    BestPosition = [BoardSize-1, d2].
 value_diagonals(Board, BoardSize, BestPosition, PositionCounter, Player, Points) :-
     get_diagonal1([0, PositionCounter], Board, BoardSize, Diagonal1),
     get_diagonal2([0, PositionCounter], Board, BoardSize, Diagonal2),
-    choose_best_diagonal(Diagonal1, Diagonal2, Player, PointsAux1),
+    choose_best_diagonal(Diagonal1, Diagonal2, Player, Dir, PointsAux1),
     PositionCounterAux is PositionCounter + 1,
     value_diagonals(Board, BoardSize, BestPositionAux, PositionCounterAux, Player, PointsAux2),
-    value_diagonals_aux(PositionCounter, PointsAux1, BestPositionAux, PointsAux2, BestPosition, Points).
+    value_diagonals_aux([PositionCounter, Dir], PointsAux1, BestPositionAux, PointsAux2, BestPosition, Points).
