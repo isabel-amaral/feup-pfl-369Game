@@ -34,9 +34,9 @@ initial_state(Size, [Size, Board, 0, 0, w]) :-
 
 
 %display_winner(+Winner)
-display_winner(b) :- write('Player with white pieces won!'), nl.
-display_winner(w) :- write('Player with black pieces won!'), nl.
-display_winner(t) :- write('Tie'), nl.
+display_winner(b) :- write('The black pieces won the victory in this battle of wits!'), nl.
+display_winner(w) :- write('The white pieces won the victory in this battle of wits!'), nl.
+display_winner(t) :- write('No winner today. The game ends in a draw!'), nl.
 
 
 % game_over_aux(+WhitePoints, +BlackPoints, -Winner)
