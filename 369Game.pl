@@ -33,6 +33,12 @@ initial_state(Size, [Size, Board, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
+%display_winner(+Winner)
+display_winner(b) :- write('Player with white pieces won!'), nl.
+display_winner(w) :- write('Player with black pieces won!'), nl.
+display_winner(t) :- write('Tie'), nl.
+
+
 % game_over_aux(+WhitePoints, +BlackPoints, -Winner)
 game_over_aux(WPoints, BPoints, Winner) :-
     WPoints > BPoints,
