@@ -49,8 +49,8 @@ game_over(GameState, Winner) :-
     get_next_player(GameState, Player),
     valid_moves(GameState, Player, FreePositions),
     length(FreePositions, 0),
-    value(GameState, WPoints),
-    value(GameState, BPoints),
+    value(GameState, w, WPoints),
+    value(GameState, b, BPoints),
     game_over_aux(WPoints, BPoints, Winner).
 
 
