@@ -57,7 +57,8 @@ game_over(GameState, Winner) :-
     length(FreePositions, 0),
     value(GameState, w, WPoints),
     value(GameState, b, BPoints),
-    game_over_aux(WPoints, BPoints, Winner).
+    game_over_aux(WPoints, BPoints, Winner),
+    display_winner(Winner).
 
 
 % play/0
