@@ -152,7 +152,7 @@ choose_move(GameState, Player, 2, [Line, Column]) :-
     choose_move_aux(Board, BoardSize, BestLine, LinePoints, BestColumn, ColumnPoints, BestDiagonal, DiagonalPoints, [Line, Column]),
     !.
 choose_move(GameState, Player, 2, [Line, Column]) :-
-    write('hello'), nl,
+    nl,
     valid_moves(GameState, Player, ListOfMoves),
     length(ListOfMoves, Size),
     random(0, Size, Choice),
