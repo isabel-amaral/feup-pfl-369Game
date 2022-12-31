@@ -56,12 +56,21 @@ choose_game_type(GameType) :-
 %choose_level(-Level)
 choose_level(Level) :-
     repeat, nl,
-    write('Choose game level:'), nl,
+    write('Choose game level (1 or 2):'), nl,
     read(L),
     number(L),
     N >= 1,
     N =< 2,
     Level is L.
+
+
+%choose_board_size(-Size)
+choose_board_size(Size) :-
+    repeat, nl,
+    write('Choose board size:'), nl,
+    read(S),
+    number(S),
+    Size is S.
 
 
 %display_winner(+Winner)
