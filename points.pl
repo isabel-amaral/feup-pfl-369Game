@@ -39,12 +39,12 @@ column_points(Board, Player, [_, C], Points) :-
 % diagonal1_points(+Board, +Player, +Move, +Size, -Points)
 diagonal1_points(Board, Player, Move, Size, Points) :-
     get_diagonal1(Move, Board, Size, Diagonal),
-    points(Diagonal, Player, 0, Points).
+    points(Diagonal, Player, Points).
 
 % diagonal2_points(+Board, +Player, +Move, +Size, -Points)
 diagonal2_points(Board, Player, Move, Size, Points) :-
     get_diagonal2(Move, Board, Size, Diagonal),
-    points(Diagonal, Player, 0, Points).
+    points(Diagonal, Player, Points).
 
 
 % value_line(+Line, +Player, -Value)
