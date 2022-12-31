@@ -16,8 +16,10 @@ choose_game_type(GameType) :-
     N =< 3,
     map_option_to_game_type(N, GameType).
 
-% choose_level(-Level)
-choose_level(Level) :-
+% choose_level(+GameType, -Level)
+choose_level(h/h, 1) :- !.
+
+choose_level(_, Level) :-
     repeat, nl,
     write('Choose game level (1 or 2):'), nl,
     read(L),
@@ -38,5 +40,5 @@ choose_board_size(Size) :-
 menu(GameType, Level, Size) :- 
     nl, 
     choose_game_type(GameType),
-    choose_level(Level),
+    choose_level(GameType, Level),
     choose_board_size(Size).
