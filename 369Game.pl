@@ -53,6 +53,17 @@ choose_game_type(GameType) :-
     map_option_to_game_type(N, GameType).
 
 
+%choose_level(-Level)
+choose_level(Level) :-
+    repeat, nl,
+    write('Choose game level:'), nl,
+    read(L),
+    number(L),
+    N >= 1,
+    N =< 2,
+    Level is L.
+
+
 %display_winner(+Winner)
 display_winner(b) :- write('The black pieces won the victory in this battle of wits!'), nl.
 display_winner(w) :- write('The white pieces won the victory in this battle of wits!'), nl.
