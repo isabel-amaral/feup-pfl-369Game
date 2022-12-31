@@ -58,7 +58,6 @@ game_over(GameState, Winner) :-
 
 % play/0
 % TODO: Add call to game_cycle
-% TODO: Change call of initial_state to include the game level
 play :-
     menu(GameType, Level, Size),
-    initial_state(Size, GameState).
+    initial_state(Size, Level, GameState).
