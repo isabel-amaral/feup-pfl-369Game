@@ -74,17 +74,17 @@ update_board([BoardSize, _, Level, WhitePlayer, BlackPlayer, NextPlayer], NewBoa
 
 % update_points(+GameState, +Move, -NewGameState)
 update_points([Size, Board, Level, WPoints, BPoints, w], Move, NewGameState) :- 
-    row_points(Board, Player, Move, RowPoints),
-    column_points(Board, Player, Move, ColumnPoints),
-    diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
-    diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
+    row_points(Board, w, Move, RowPoints),
+    column_points(Board, w, Move, ColumnPoints),
+    diagonal1_points(Board, w, Move, Size, Diagonal1Points),
+    diagonal2_points(Board, w, Move, Size, Diagonal2Points),
     Points is WPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
     NewGameState = [Size, Board, Level, Points, BPoints, w].
 update_points([Size, Board, Level, WPoints, BPoints, b], Move, NewGameState) :- 
-    row_points(Board, Player, Move, RowPoints),
-    column_points(Board, Player, Move, ColumnPoints),
-    diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
-    diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
+    row_points(Board, b, Move, RowPoints),
+    column_points(Board, b, Move, ColumnPoints),
+    diagonal1_points(Board, b, Move, Size, Diagonal1Points),
+    diagonal2_points(Board, b, Move, Size, Diagonal2Points),
     Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
     NewGameState = [Size, Board, Level, WPoints, Points, b].
 
