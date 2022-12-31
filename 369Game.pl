@@ -1,3 +1,4 @@
+:- use_module(library(system)).
 :- use_module(library(lists)).
 :- use_module(library(random)).
 
@@ -75,8 +76,8 @@ game_cycle(GameState, h/pc) :-
     read_move_until_valid(ListOfMoves, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
+    sleep(3),
     game_cycle(NewGameState, h/pc).
-
 game_cycle(GameState, h/pc) :-
     get_next_player(GameState, b),
     get_level(GameState, Level),
@@ -91,6 +92,7 @@ game_cycle(GameState, pc/pc) :-
     choose_move(GameState, NextPlayer, Level, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
+    sleep(3),
     game_cycle(NewGameState, pc/pc).
 
 
