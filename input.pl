@@ -9,8 +9,8 @@ read_move(Row, Column) :-
 
 % read_move_until_valid(+ListOfValidMoves, -Move)
 read_move_until_valid(ListOfValidMoves, Move):- 
-    repeat,
-    write('Insert your move in Row-Column format'), nl,
+    repeat, nl,
+    write('Insert your move in Number-Letter format'), nl,
     read_move(Row, Column),
     Move = [Row, Column],
     member(Move, ListOfValidMoves),
