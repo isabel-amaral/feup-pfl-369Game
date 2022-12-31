@@ -99,8 +99,11 @@ move(GameState, [Row, Column], NewGameState) :-
     insert_piece_into_board(Board, Player, Row, Column, NewBoard),
     update_board(GameState, NewBoard, NewGameState1),
     update_points(NewGameState1, [Row, Column], NewGameState2),
-    update_next_player(NewGameState2, NewGameState).         
+    update_next_player(NewGameState2, NewGameState).  
 
+
+% there_is_good_move(+LinePoints, +ColumnPoints, +DiagonalPoints)
+there_is_good_move(0, 0, 0).
 
 % choose_move_aux(+Board, +BoardSize, +BestLine, +LinePoints, +BestColumn, +ColumnPoints, +BestDiagonal, +DiagonalPoints, -Move)
 choose_move_aux(Board, _, BestLine, LinePoints, _, ColumnPoints, _, DiagonalPoints, [Line, Column]) :-
@@ -126,7 +129,6 @@ choose_move_aux(Board, BoardSize, _, _, _, _, [StartingColumn, d1], _, [Line, Co
     random(0, Size, Choice),
     nth0(Choice, ListOfMoves, Line),
     Column is StartingColumn + Line.
-
 choose_move_aux(Board, BoardSize, _, _, _, _, [StartingColumn, d2], _, [Line, Column]) :-
     valid_moves_in_diagonal(Board, BoardSize, [StartingColumn, d2], ListOfMoves),
     length(ListOfMoves, Size),
@@ -146,4 +148,12 @@ choose_move(GameState, Player, 2, [Line, Column]) :-
     get_board_size(GameState, BoardSize),
     value_columns(Board, BoardSize, BestColumn, Player, ColumnPoints),
     value_diagonals(Board, BoardSize, BestDiagonal, Player, DiagonalPoints),
-    choose_move_aux(Board, BoardSize, BestLine, LinePoints, BestColumn, ColumnPoints, BestDiagonal, DiagonalPoints, [Line, Column]).
+    \+there_is_good_move(LinePoints, ColumnPoints, DiagonalPoints),
+    choose_move_aux(Board, BoardSize, BestLine, LinePoints, BestColumn, ColumnPoints, BestDiagonal, DiagonalPoints, [Line, Column]),
+    !.
+choose_move(GameState, Player, 2, [Line, Column]) :-
+    write('hello'), nl,
+    valid_moves(GameState, Player, ListOfMoves),
+    length(ListOfMoves, Size),
+    random(0, Size, Choice),
+    nth0(Choice, ListOfMoves, [Line, Column]). 
