@@ -40,9 +40,3 @@ menu(GameType, Level, Size) :-
     choose_game_type(GameType),
     choose_level(Level),
     choose_board_size(Size).
-
-
-% display_winner(+Winner)
-display_winner(b) :- write('The black pieces won the victory in this battle of wits!'), nl.
-display_winner(w) :- write('The white pieces won the victory in this battle of wits!'), nl.
-display_winner(t) :- write('No winner today. The game ends in a draw!'), nl.
