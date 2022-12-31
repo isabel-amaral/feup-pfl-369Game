@@ -53,4 +53,5 @@ display_game(GameState) :-
     write('  '),
     display_column_tags(BoardSize, 0),
     nl,
-    display_game_aux(BoardSize, Board, 1).
+    display_game_aux(BoardSize, Board, 1),
+    nl.
