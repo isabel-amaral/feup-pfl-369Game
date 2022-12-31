@@ -1,4 +1,4 @@
-%read_move(-Row, -Column)
+% read_move(-Row, -Column)
 read_move(Row, Column) :- 
     read(N-L),
     number(N),
@@ -7,7 +7,7 @@ read_move(Row, Column) :-
     char_code(L, Letter),
     Column is Letter-A.
 
-%read_move_until_valid(+ListOfValidMoves, -Move)
+% read_move_until_valid(+ListOfValidMoves, -Move)
 read_move_until_valid(ListOfValidMoves, Move):- 
     repeat,
     write('Insert your move in Row-Column format'), nl,
