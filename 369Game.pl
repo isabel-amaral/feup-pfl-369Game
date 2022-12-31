@@ -68,7 +68,7 @@ game_cycle(GameState, h/h) :-
 
 game_cycle(GameState, h/pc) :-
     get_next_player(GameState, w),
-    valid_moves(GameState, NextPlayer, ListOfMoves),
+    valid_moves(GameState, w, ListOfMoves),
     read_move_until_valid(ListOfMoves, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
@@ -77,7 +77,7 @@ game_cycle(GameState, h/pc) :-
 game_cycle(GameState, h/pc) :-
     get_next_player(GameState, b),
     get_level(GameState, Level),
-    choose_move(GameState, NextPlayer, Level, Move),
+    choose_move(GameState, b, Level, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
     \+game_over(NewGameState, _),
