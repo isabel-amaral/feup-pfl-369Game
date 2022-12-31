@@ -1,5 +1,5 @@
 % display_line_separators(+Counter)
-display_line_separators(0).
+display_line_separators(0) :- !.
 display_line_separators(Counter) :-
     write('-'),
     CounterAux is Counter - 1,
