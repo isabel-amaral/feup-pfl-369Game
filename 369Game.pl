@@ -56,6 +56,17 @@ game_over(GameState, Winner) :-
     display_winner(Winner).
 
 
+% game_cycle(+GameState, +GameType)
+game_cycle(GameState, h/h) :-
+    get_next_player(GameState, NextPlayer),
+    valid_moves(GameState, NextPlayer, ListOfMoves),
+    read_move_until_valid(ListOfMoves, Move),
+    move(GameState, Move, NewGameState),
+    display_game(NewGameState),
+    \+game_over(NewGameState, _),
+    game_cycle(NewGameState, h/h).
+
+
 % play/0
 % TODO: Add call to game_cycle
 % TODO: Change call of initial_state to include the game level
