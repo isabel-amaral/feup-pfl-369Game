@@ -30,7 +30,7 @@ create_board(Size, Counter, Board) :-
 
 % GameState is saved in the format [BoardSize, Board, Level, WhitePlayer, BlackPlayer, NextPlayer]
 % initial_state(+Size, +Level, -GameState)
-initial_state(Size, [Size, Board, Level, 0, 0, w]) :-
+initial_state(Size, Level, [Size, Board, Level, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
@@ -69,7 +69,6 @@ game_cycle(GameState, h/h) :-
 
 % play/0
 % TODO: Add call to game_cycle
-% TODO: Change call of initial_state to include the game level
 play :-
     menu(GameType, Level, Size),
-    initial_state(Size, GameState).
+    initial_state(Size, Level, GameState).
