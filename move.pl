@@ -69,28 +69,28 @@ insert_piece_into_board([Row | Rest], Piece, R, Col, NewBoard) :-
     NewBoard = [Row | NB1].   
 
 % update_board(+GameState, +Board, -NewGameState)
-update_board([BoardSize, _, WhitePlayer, BlackPlayer, NextPlayer], NewBoard, NewGameState) :-
-    NewGameState = [BoardSize, NewBoard, WhitePlayer, BlackPlayer, NextPlayer].
+update_board([BoardSize, _, Level, GameType, WhitePlayer, BlackPlayer, NextPlayer], NewBoard, NewGameState) :-
+    NewGameState = [BoardSize, NewBoard, Level, GameType, WhitePlayer, BlackPlayer, NextPlayer].
 
 % update_points(+GameState, +Move, -NewGameState)
-update_points([Size, Board, WPoints, BPoints, w], Move, NewGameState) :- 
+update_points([Size, Board, Level, GameType, WPoints, BPoints, w], Move, NewGameState) :- 
     row_points(Board, Player, Move, RowPoints),
     column_points(Board, Player, Move, ColumnPoints),
     diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
     diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
     Points is WPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
-    NewGameState = [Size, Board, Points, BPoints, w].
-update_points([Size, Board, WPoints, BPoints, b], Move, NewGameState) :- 
+    NewGameState = [Size, Board, Level, GameType, Points, BPoints, w].
+update_points([Size, Board, Level, GameType, WPoints, BPoints, b], Move, NewGameState) :- 
     row_points(Board, Player, Move, RowPoints),
     column_points(Board, Player, Move, ColumnPoints),
     diagonal1_points(Board, Player, Move, Size, Diagonal1Points),
     diagonal2_points(Board, Player, Move, Size, Diagonal2Points),
     Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
-    NewGameState = [Size, Board, WPoints, Points, b].
+    NewGameState = [Size, Board, Level, GameType, WPoints, Points, b].
 
 % update_next_player(+GameState, -NewGameState)
-update_next_player([Size, Board, WPoints, BPoints, w], [Size,Board, WPoints, BPoints, b]).
-update_next_player([Size, Board, WPoints, BPoints, b], [Size,Board, WPoints, BPoints, w]).
+update_next_player([Size, Board, Level, GameType, WPoints, BPoints, w], [Size, Board, Level, GameType, WPoints, BPoints, b]).
+update_next_player([Size, Board, Level, GameType, WPoints, BPoints, b], [Size, Board, Level, GameType, WPoints, BPoints, w]).
 
 % move(+GameState, +Move, -NewGameState) 
 move(GameState, [Row, Column], NewGameState) :- 

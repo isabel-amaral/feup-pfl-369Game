@@ -28,9 +28,9 @@ create_board(Size, Counter, Board) :-
     Board = [Line | BoardAux].
 
 
-% GameState is saved in the format [BoardSize, Board, WhitePlayer, BlackPlayer, NextPlayer]
-% initial_state(+Size, -GameState)
-initial_state(Size, [Size, Board, 0, 0, w]) :-
+% GameState is saved in the format [BoardSize, Board, Level, GameType, WhitePlayer, BlackPlayer, NextPlayer]
+% initial_state(+Size, +Level, +GameType, -GameState)
+initial_state(Size, [Size, Board, Level, GameType, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
