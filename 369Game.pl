@@ -57,13 +57,16 @@ game_over(GameState, Winner) :-
 
 
 % game_cycle(+GameState, +GameType)
+game_cycle(GameState, _) :-
+    game_over(GameState, _Winner),
+    !. 
+
 game_cycle(GameState, h/h) :-
     get_next_player(GameState, NextPlayer),
     valid_moves(GameState, NextPlayer, ListOfMoves),
     read_move_until_valid(ListOfMoves, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
-    \+game_over(NewGameState, _),
     game_cycle(NewGameState, h/h).
 
 game_cycle(GameState, h/pc) :-
@@ -72,15 +75,14 @@ game_cycle(GameState, h/pc) :-
     read_move_until_valid(ListOfMoves, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
-    \+game_over(NewGameState, _),
     game_cycle(NewGameState, h/pc).
+
 game_cycle(GameState, h/pc) :-
     get_next_player(GameState, b),
     get_level(GameState, Level),
     choose_move(GameState, b, Level, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
-    \+game_over(NewGameState, _),
     game_cycle(NewGameState, h/pc).
 
 game_cycle(GameState, pc/pc) :-
@@ -89,7 +91,6 @@ game_cycle(GameState, pc/pc) :-
     choose_move(GameState, NextPlayer, Level, Move),
     move(GameState, Move, NewGameState),
     display_game(NewGameState),
-    \+game_over(NewGameState, _),
     game_cycle(NewGameState, pc/pc).
 
 
