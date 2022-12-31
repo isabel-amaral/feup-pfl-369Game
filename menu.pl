@@ -22,8 +22,8 @@ choose_level(Level) :-
     write('Choose game level (1 or 2):'), nl,
     read(L),
     number(L),
-    N >= 1,
-    N =< 2,
+    L >= 1,
+    L =< 2,
     Level is L.
 
 % choose_board_size(-Size)
