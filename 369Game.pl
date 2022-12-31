@@ -30,7 +30,7 @@ create_board(Size, Counter, Board) :-
 
 % GameState is saved in the format [BoardSize, Board, Level, WhitePlayer, BlackPlayer, NextPlayer]
 % initial_state(+Size, +Level, -GameState)
-initial_state(Size, [Size, Board, Level, 0, 0, w]) :-
+initial_state(Size, Level, [Size, Board, Level, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
