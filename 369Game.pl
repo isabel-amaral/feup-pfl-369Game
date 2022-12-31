@@ -33,13 +33,13 @@ initial_state(Size, [Size, Board, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
-%map_option_to_game_type(+Option, -GameType)
+% map_option_to_game_type(+Option, -GameType)
 map_option_to_game_type(1, h/h).
 map_option_to_game_type(2, h/pc).
 map_option_to_game_type(3, pc/pc).
 
 
-%choose_game_type(-GameType)
+% choose_game_type(-GameType)
 choose_game_type(GameType) :- 
     repeat, nl,
     write('Choose the game type: '), nl,
@@ -53,7 +53,7 @@ choose_game_type(GameType) :-
     map_option_to_game_type(N, GameType).
 
 
-%choose_level(-Level)
+% choose_level(-Level)
 choose_level(Level) :-
     repeat, nl,
     write('Choose game level (1 or 2):'), nl,
@@ -64,7 +64,7 @@ choose_level(Level) :-
     Level is L.
 
 
-%choose_board_size(-Size)
+% choose_board_size(-Size)
 choose_board_size(Size) :-
     repeat, nl,
     write('Choose board size:'), nl,
@@ -73,7 +73,7 @@ choose_board_size(Size) :-
     Size is S.
 
 
-%display_winner(+Winner)
+% display_winner(+Winner)
 display_winner(b) :- write('The black pieces won the victory in this battle of wits!'), nl.
 display_winner(w) :- write('The white pieces won the victory in this battle of wits!'), nl.
 display_winner(t) :- write('No winner today. The game ends in a draw!'), nl.
@@ -99,6 +99,14 @@ game_over(GameState, Winner) :-
     value(GameState, b, BPoints),
     game_over_aux(WPoints, BPoints, Winner),
     display_winner(Winner).
+
+
+% menu(-GameType, -Level, -Size)
+menu(GameType, Level, Size) :- 
+    nl, 
+    choose_game_type(GameType),
+    choose_level(Level),
+    choose_board_size(Size).
 
 
 % play/0
