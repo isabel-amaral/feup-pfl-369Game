@@ -1,3 +1,14 @@
+% display_points(+GameState)
+display_points(GameState) :-
+    nl,
+    value(GameState, w, WPoints),
+    value(GameState, b, BPoints),
+    write('Points:'), nl,
+    write('White Pieces: '), 
+    write(WPoints), nl,
+    write('Black Pieces: '), 
+    write(BPoints), nl.
+
 % display_line_separators(+Counter)
 display_line_separators(0) :- !.
 display_line_separators(Counter) :-
@@ -54,10 +65,11 @@ display_game(GameState) :-
     display_column_tags(BoardSize, 0),
     nl,
     display_game_aux(BoardSize, Board, 1),
-    nl.
+    nl,
+    display_points(GameState).
 
 
 % display_winner(+Winner)
-display_winner(b) :- write('The black pieces won the victory in this battle of wits!'), nl.
-display_winner(w) :- write('The white pieces won the victory in this battle of wits!'), nl.
-display_winner(t) :- write('No winner today. The game ends in a draw!'), nl.
+display_winner(b) :- nl, write('The black pieces won the victory in this battle of wits!'), nl.
+display_winner(w) :- nl, write('The white pieces won the victory in this battle of wits!'), nl.
+display_winner(t) :- nl, write('No winner today. The game ends in a draw!'), nl.
