@@ -51,16 +51,19 @@ diagonal2_points(Board, Player, Move, Size, Points) :-
 value_line(Line, Player, Value) :-
     count_pieces_in_line(Line, Player, Number),
     Number = 2,
+    member(e, Line),
     Value is 1, 
     !.
 value_line(Line, Player, Value) :-
     count_pieces_in_line(Line, Player, Number),
     Number = 5,
+    member(e, Line),
     Value is 2, 
     !.
 value_line(Line, Player, Value) :-
     count_pieces_in_line(Line, Player, Number),
     Number = 8,
+    member(e, Line),
     Value is 3,
     !.
 value_line(_, _, 0).
