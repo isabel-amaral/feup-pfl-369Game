@@ -66,6 +66,15 @@ game_cycle(GameState, h/h) :-
     \+game_over(NewGameState, _),
     game_cycle(NewGameState, h/h).
 
+game_cycle(GameState, pc/pc) :-
+    get_level(GameState, Level),
+    get_next_player(GameState, NextPlayer),
+    choose_move(GameState, NextPlayer, Level, Move),
+    move(GameState, Move, NewGameState),
+    display_game(NewGameState),
+    \+game_over(NewGameState, _),
+    game_cycle(NewGameState, pc/pc).
+
 
 % play/0
 play :-
