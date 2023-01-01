@@ -1,4 +1,4 @@
-% valid_moves_aux(Board, ListOfMoves).
+% valid_moves_aux(+Board, +Row, +Column, -ListOfMoves).
 valid_moves_aux([[]], _, _, []) :- !.
 valid_moves_aux([[]| Lines], Row, _, ListOfMoves) :- 
     Row1 is Row+1,
