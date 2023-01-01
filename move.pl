@@ -1,6 +1,4 @@
 % valid_moves_aux(Board, ListOfMoves).
-valid_moves_aux(Board, ListOfMoves) :- 
-    valid_moves_aux(Board, 0, 0, ListOfMoves).
 valid_moves_aux([[]], _, _, []) :- !.
 valid_moves_aux([[]| Lines], Row, _, ListOfMoves) :- 
     Row1 is Row+1,
@@ -18,7 +16,7 @@ valid_moves_aux([[_ | Pieces] | Lines], Row, Col, ListOfMoves) :-
 % valid_moves(+GameState, +Player, -ListOfMoves) 
 valid_moves(GameState, _, ListOfMoves) :-
     get_board(GameState, Board),
-    valid_moves_aux(Board, ListOfMoves).
+    valid_moves_aux(Board, 0, 0, ListOfMoves).
 
 
 % valid_moves_in_sequence(+Line, +LineCounter, -ListOfMoves)
