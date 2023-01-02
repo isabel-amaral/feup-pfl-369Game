@@ -26,6 +26,7 @@ get_next_player([_, _, _, _, _, NextPlayer], NextPlayer).
 
 
 % get_column(+ColumnIndex, +Board, -Column)
+% Retrieves a specific column from the board
 get_column(_, [], []) :- !.
 get_column(ColumnIndex, [Line | Lines], Column) :- 
     nth0(ColumnIndex, Line, Piece),
@@ -33,6 +34,8 @@ get_column(ColumnIndex, [Line | Lines], Column) :-
     Column = [Piece | Column1].
 
 % get_diagonal1(+Move, +Board, +Size, -Diagonal)
+% Computes the top leftmost of the major diagonal that passes through the player's move and 
+% returns this major diagonal in the Diagonal variable
 get_diagonal1([Line, Column], Board, Size, Diagonal) :-
     Column >= Line,
     Column1 is Column-Line,
@@ -45,6 +48,7 @@ get_diagonal1([Line, Column], Board, Size, Diagonal) :-
     get_diagonal1_aux(DiagonalStart, Board, Size, Diagonal).
 
 % get_diagonal1_aux(+Position, +Board, +Size, -Diagonal)
+% Retrieves the major diagonal that starts at a given position
 get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Size1 is Size-1,
     C == Size1,  
@@ -69,6 +73,8 @@ get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Diagonal = [Piece | Diagonal1].
 
 % get_diagonal2(+Move, +Board, +Size, -Diagonal)
+% Computes the top rightmost of the minor diagonal that passes through the player's move and 
+% returns this minor diagonal in the Diagonal variable
 get_diagonal2([Line, Column], Board, Size, Diagonal) :-
     Column + Line =< Size-1,
     Column1 is Column + Line,
@@ -82,6 +88,7 @@ get_diagonal2([Line, Column], Board, Size, Diagonal) :-
     get_diagonal2_aux(DiagonalStart, Board, Size, Diagonal).
 
 % get_diagonal2_aux(+Position, +Board, +Size, -Diagonal)
+% Retrieves the minor diagonal that starts at a given position
 get_diagonal2_aux([R, C], Board, _, Diagonal) :-
     C == 0,  
     nth0(R, Board, Line),
