@@ -23,7 +23,7 @@ valid_moves(GameState, _, ListOfMoves) :-
 
 % valid_moves_in_sequence(+Line, +LineCounter, -ListOfMoves)
 % Determines all the empty positions in a given sequence, which may be one of the
-% board's lines, one of its columns or one of its diagonals 
+% board´s lines, one of its columns or one of its diagonals 
 valid_moves_in_sequence([], _, []).
 valid_moves_in_sequence([e | Rest], LineCounter, ListOfMoves) :-
     LineCounterAux is LineCounter + 1,
@@ -100,12 +100,12 @@ update_points([Size, Board, Level, WPoints, BPoints, b], Move, NewGameState) :-
     NewGameState = [Size, Board, Level, WPoints, Points, b].
 
 % update_next_player(+GameState, -NewGameState)
-% Updates the player's turn during the game
+% Updates the player´s turn during the game
 update_next_player([Size, Board, Level, WPoints, BPoints, w], [Size, Board, Level, WPoints, BPoints, b]).
 update_next_player([Size, Board, Level, WPoints, BPoints, b], [Size, Board, Level, WPoints, BPoints, w]).
 
 % move(+GameState, +Move, -NewGameState) 
-% Executes a valid move, obtaining the new state of the game. Starts by placing the player's piece on the board
+% Executes a valid move, obtaining the new state of the game. Starts by placing the player´s piece on the board
 % and updating the board. The player score and the next player are then updated
 move(GameState, [Line, Column], NewGameState) :- 
     get_next_player(GameState, Player),

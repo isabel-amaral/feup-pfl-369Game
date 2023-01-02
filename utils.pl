@@ -34,7 +34,7 @@ get_column(ColumnIndex, [Line | Lines], Column) :-
     Column = [Piece | Column1].
 
 % get_diagonal1(+Move, +Board, +Size, -Diagonal)
-% Computes the top leftmost of the major diagonal that passes through the player's move and 
+% Computes the top leftmost of the major diagonal that passes through the player´s move and 
 % returns this major diagonal in the Diagonal variable
 get_diagonal1([Line, Column], Board, Size, Diagonal) :-
     Column >= Line,
@@ -73,7 +73,7 @@ get_diagonal1_aux([R, C], Board, Size, Diagonal) :-
     Diagonal = [Piece | Diagonal1].
 
 % get_diagonal2(+Move, +Board, +Size, -Diagonal)
-% Computes the top rightmost of the minor diagonal that passes through the player's move and 
+% Computes the top rightmost of the minor diagonal that passes through the player´s move and 
 % returns this minor diagonal in the Diagonal variable
 get_diagonal2([Line, Column], Board, Size, Diagonal) :-
     Column + Line =< Size-1,
