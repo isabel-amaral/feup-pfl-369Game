@@ -1,17 +1,17 @@
-% valid_moves_aux(+Board, +Row, +Column, -ListOfMoves).
+% valid_moves_aux(+Board, +Line, +Column, -ListOfMoves).
 valid_moves_aux([[]], _, _, []) :- !.
-valid_moves_aux([[]| Lines], Row, _, ListOfMoves) :- 
-    Row1 is Row+1,
-    valid_moves_aux(Lines, Row1, 0, ListOfMoves), 
+valid_moves_aux([[]| Lines], Line, _, ListOfMoves) :- 
+    Line1 is Line + 1,
+    valid_moves_aux(Lines, Line1, 0, ListOfMoves), 
     !.
-valid_moves_aux([[e | Pieces] | Lines], Row, Col, ListOfMoves) :- 
+valid_moves_aux([[e | Pieces] | Lines], Line, Col, ListOfMoves) :- 
     Col1 is Col + 1,
-    valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves1), 
-    ListOfMoves = [[Row, Col] | ListOfMoves1],
+    valid_moves_aux([Pieces | Lines], Line, Col1, ListOfMoves1), 
+    ListOfMoves = [[Line, Col] | ListOfMoves1],
     !.
-valid_moves_aux([[_ | Pieces] | Lines], Row, Col, ListOfMoves) :-
+valid_moves_aux([[_ | Pieces] | Lines], Line, Col, ListOfMoves) :-
     Col1 is Col + 1,
-    valid_moves_aux([Pieces | Lines], Row, Col1, ListOfMoves).
+    valid_moves_aux([Pieces | Lines], Line, Col1, ListOfMoves).
 
 % valid_moves(+GameState, +Player, -ListOfMoves) 
 valid_moves(GameState, _, ListOfMoves) :-
@@ -54,22 +54,22 @@ valid_moves_in_diagonal(Board, BoardSize, [StartingColumn, d2], ListOfMoves) :-
     valid_moves_in_sequence(Diagonal, 0, ListOfMoves).
 
 
-% insert_piece_into_row(+Row, +Piece, +Position, -NewRow)
-insert_piece_into_row([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
-insert_piece_into_row([Member | Rest], Piece, Position, Result) :- 
+% insert_piece_into_line(+Line, +Piece, +Position, -NewLine)
+insert_piece_into_line([_ | Rest], Piece, 0, [Piece | Rest]) :- !.
+insert_piece_into_line([Member | Rest], Piece, Position, Result) :- 
     Position1 is Position-1,
-    insert_piece_into_row(Rest, Piece, Position1, R1),
+    insert_piece_into_line(Rest, Piece, Position1, R1),
     Result = [Member | R1].
 
-% insert_piece_into_board(+Board, +Piece, +Row, +Column, -NewBoard)
-insert_piece_into_board([Row | Rest], Piece, 0, Col, NewBoard) :- 
-    insert_piece_into_row(Row, Piece, Col, NewRow), 
-    NewBoard = [NewRow | Rest], 
+% insert_piece_into_board(+Board, +Piece, +Line, +Column, -NewBoard)
+insert_piece_into_board([Line | Rest], Piece, 0, Col, NewBoard) :- 
+    insert_piece_into_line(Line, Piece, Col, NewLine), 
+    NewBoard = [NewLine | Rest], 
     !.
-insert_piece_into_board([Row | Rest], Piece, R, Col, NewBoard) :- 
-    Row1 is R-1,
-    insert_piece_into_board(Rest, Piece, Row1, Col, NB1),
-    NewBoard = [Row | NB1].   
+insert_piece_into_board([Line | Rest], Piece, R, Col, NewBoard) :- 
+    Line1 is R-1,
+    insert_piece_into_board(Rest, Piece, Line1, Col, NB1),
+    NewBoard = [Line | NB1].   
 
 % update_board(+GameState, +Board, -NewGameState)
 update_board([BoardSize, _, Level, WhitePlayer, BlackPlayer, NextPlayer], NewBoard, NewGameState) :-
@@ -77,18 +77,18 @@ update_board([BoardSize, _, Level, WhitePlayer, BlackPlayer, NextPlayer], NewBoa
 
 % update_points(+GameState, +Move, -NewGameState)
 update_points([Size, Board, Level, WPoints, BPoints, w], Move, NewGameState) :- 
-    row_points(Board, w, Move, RowPoints),
+    line_points(Board, w, Move, LinePoints),
     column_points(Board, w, Move, ColumnPoints),
     diagonal1_points(Board, w, Move, Size, Diagonal1Points),
     diagonal2_points(Board, w, Move, Size, Diagonal2Points),
-    Points is WPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
+    Points is WPoints + LinePoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
     NewGameState = [Size, Board, Level, Points, BPoints, w].
 update_points([Size, Board, Level, WPoints, BPoints, b], Move, NewGameState) :- 
-    row_points(Board, b, Move, RowPoints),
+    line_points(Board, b, Move, LinePoints),
     column_points(Board, b, Move, ColumnPoints),
     diagonal1_points(Board, b, Move, Size, Diagonal1Points),
     diagonal2_points(Board, b, Move, Size, Diagonal2Points),
-    Points is BPoints + RowPoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
+    Points is BPoints + LinePoints + ColumnPoints + Diagonal1Points + Diagonal2Points,
     NewGameState = [Size, Board, Level, WPoints, Points, b].
 
 % update_next_player(+GameState, -NewGameState)
@@ -96,12 +96,12 @@ update_next_player([Size, Board, Level, WPoints, BPoints, w], [Size, Board, Leve
 update_next_player([Size, Board, Level, WPoints, BPoints, b], [Size, Board, Level, WPoints, BPoints, w]).
 
 % move(+GameState, +Move, -NewGameState) 
-move(GameState, [Row, Column], NewGameState) :- 
+move(GameState, [Line, Column], NewGameState) :- 
     get_next_player(GameState, Player),
     get_board(GameState, Board),
-    insert_piece_into_board(Board, Player, Row, Column, NewBoard),
+    insert_piece_into_board(Board, Player, Line, Column, NewBoard),
     update_board(GameState, NewBoard, NewGameState1),
-    update_points(NewGameState1, [Row, Column], NewGameState2),
+    update_points(NewGameState1, [Line, Column], NewGameState2),
     update_next_player(NewGameState2, NewGameState).  
 
 

@@ -27,10 +27,10 @@ points(Sequence, Player, Points) :-
     !.
 points(_, _, 0).
 
-% row_points(+Board, +Player, +Move, -Points)
-row_points(Board, Player, [R, _], Points) :- 
-    nth0(R, Board, Row),
-    points(Row, Player, Points).
+% line_points(+Board, +Player, +Move, -Points)
+line_points(Board, Player, [R, _], Points) :- 
+    nth0(R, Board, Line),
+    points(Line, Player, Points).
 
 % column_points(+Board, +Player, +Move, -Points)
 column_points(Board, Player, [_, C], Points) :-
