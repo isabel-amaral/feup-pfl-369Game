@@ -10,6 +10,7 @@
 :- consult('move.pl').
 
 % create_board_line(+Counter, -Line)
+% Create one line of the game board with Size empty positions
 create_board_line(0, []).
 create_board_line(Counter, Line) :-
     Counter > 0,
@@ -18,6 +19,7 @@ create_board_line(Counter, Line) :-
     Line = [e | LineAux].
 
 % create_board(+Size, +Counter, -Board)
+% Create a game board with Size lines and Size columns with all positions empty
 create_board(Size, 1, Board) :-
     create_board_line(Size, Line),
     Board = [Line].
@@ -30,12 +32,16 @@ create_board(Size, Counter, Board) :-
 
 
 % GameState is saved in the format [BoardSize, Board, Level, WhitePlayer, BlackPlayer, NextPlayer]
+% Initializes the game state with the size of the board, a completely empty board, the level of
+% the game, the number of points of the player with the white pieces and of the player with black
+% ones, both initially 0, and the player that is going to play next, white always goes first
 % initial_state(+Size, +Level, -GameState)
 initial_state(Size, Level, [Size, Board, Level, 0, 0, w]) :-
     create_board(Size, Size, Board).
 
 
 % game_over_aux(+WhitePoints, +BlackPoints, -Winner)
+% Determines which player has move points
 game_over_aux(WPoints, BPoints, Winner) :-
     WPoints > BPoints,
     Winner = w,
@@ -47,6 +53,7 @@ game_over_aux(WPoints, BPoints, Winner) :-
 game_over_aux( _, _, t).
 
 % game_over(+GameState, -Winner)
+% Checks if the game is over, i.e. if there are no more empty positions, and, if so, determines which player won
 game_over(GameState, Winner) :- 
     get_next_player(GameState, Player),
     valid_moves(GameState, Player, FreePositions),
@@ -58,6 +65,7 @@ game_over(GameState, Winner) :-
 
 
 % game_cycle(+GameState, +GameType)
+% Implements the main game cycle according to the game type: h/h, h/pc, pc/pc
 game_cycle(GameState, _) :-
     game_over(GameState, _Winner),
     !. 
@@ -97,6 +105,7 @@ game_cycle(GameState, pc/pc) :-
 
 
 % play/0
+% Starts the game by displaying the menu
 play :-
     menu(GameType, Level, Size),
     initial_state(Size, Level, GameState),
