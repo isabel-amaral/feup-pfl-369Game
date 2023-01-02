@@ -150,8 +150,8 @@ value_diagonals(Board, BoardSize, BestPosition, PositionCounter, Player, Points)
 
 
 % value(+GameState, +Player, -Value)
-% Determines the pontuation of a given player at a certain moment
+% Determines the score of a given player at a certain moment
 value(GameState, w, Value) :-
-    get_white_player_pontuation(GameState, Value).
+    get_white_player_score(GameState, Value).
 value(GameState, b, Value) :-
-    get_black_player_pontuation(GameState, Value).
+    get_black_player_score(GameState, Value).

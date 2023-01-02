@@ -12,13 +12,13 @@ get_board([_, Board, _, _, _, _], Board).
 % Determines the game level given the game state
 get_level([_, _, Level, _, _, _], Level).
 
-% get_white_player_pontuation(+GameState, -WhitePlayer)
-% Determines the pontuation of the player with the white pieces given the game state
-get_white_player_pontuation([_, _, _, WhitePlayer, _, _], WhitePlayer).
+% get_white_player_score(+GameState, -WhitePlayer)
+% Determines the score of the player with the white pieces given the game state
+get_white_player_score([_, _, _, WhitePlayer, _, _], WhitePlayer).
 
-% get_black_player_pontuation(+GameState, -BlackPlayer)
-% Determines the pontuation of the player with the black pieces given the game state
-get_black_player_pontuation([_, _, _, _, BlackPlayer, _], BlackPlayer).
+% get_black_player_score(+GameState, -BlackPlayer)
+% Determines the score of the player with the black pieces given the game state
+get_black_player_score([_, _, _, _, BlackPlayer, _], BlackPlayer).
 
 % get_next_player(+GameState, -NextPlayer)
 % Determines the player that will be playing next given the game state
