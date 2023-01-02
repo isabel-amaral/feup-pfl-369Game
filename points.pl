@@ -10,6 +10,10 @@ count_pieces_in_line([_ | Rest], Player, Number) :-
 
 
 % points(+Sequence, +Player, -Points)
+% Determines the points in a given sequence (line, column or diagonal), based on to the number of pieces belonging to the player:
+% If the player has 3 pieces in the sequence, they earn 1 point.
+% If the player has 6 pieces in the sequence, they earn 2 points.
+% If the player has 9 pieces in the sequence, they earn 3 points.
 points(Sequence, Player, Points) :-
     count_pieces_in_line(Sequence, Player, Number),
     Number = 3,
@@ -28,21 +32,29 @@ points(Sequence, Player, Points) :-
 points(_, _, 0).
 
 % line_points(+Board, +Player, +Move, -Points)
+% Determines how many points the move generated on the chosen position line
 line_points(Board, Player, [R, _], Points) :- 
     nth0(R, Board, Line),
     points(Line, Player, Points).
 
 % column_points(+Board, +Player, +Move, -Points)
+% Determines how many points the move generated on the chosen position column
 column_points(Board, Player, [_, C], Points) :-
     get_column(C, Board, Column),
     points(Column, Player, Points).
 
 % diagonal1_points(+Board, +Player, +Move, +Size, -Points)
+% Determines how many points the move generated on the major diagonal of the chosen position.
+% The major diagonal runs from the top left to the bottom right of the board, passing through the 
+% chosen position
 diagonal1_points(Board, Player, Move, Size, Points) :-
     get_diagonal1(Move, Board, Size, Diagonal),
     points(Diagonal, Player, Points).
 
 % diagonal2_points(+Board, +Player, +Move, +Size, -Points)
+% Determines how many points the move generated on the minor diagonal of the chosen position.
+% The minor diagonal runs from the top right to the bottom left of the board, passing through the 
+% chosen position
 diagonal2_points(Board, Player, Move, Size, Points) :-
     get_diagonal2(Move, Board, Size, Diagonal),
     points(Diagonal, Player, Points).
