@@ -1,5 +1,5 @@
 % display_points(+GameState)
-% Display the points of each player according to the GameState
+% Displays the points of each player according to GameState
 display_points(GameState) :-
     nl,
     value(GameState, w, WPoints),
@@ -77,7 +77,7 @@ display_game(GameState) :-
 
 
 % display_winner(+Winner)
-% Display a user-friendly message indicating the winner
+% Displays a user-friendly message indicating the winner
 display_winner(b) :- nl, write('The black pieces won the victory in this battle of wits!'), nl.
 display_winner(w) :- nl, write('The white pieces won the victory in this battle of wits!'), nl.
 display_winner(t) :- nl, write('No winner today. The game ends in a draw!'), nl.
