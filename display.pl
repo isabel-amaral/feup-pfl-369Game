@@ -11,6 +11,7 @@ display_points(GameState) :-
     write(BPoints), nl.
 
 % display_line_separators(+Counter)
+% Displays a line of '-' characters in order to separate board lines
 display_line_separators(0) :- !.
 display_line_separators(Counter) :-
     write('-'),
@@ -18,6 +19,7 @@ display_line_separators(Counter) :-
     display_line_separators(CounterAux).
 
 % display_column_tags(+BoardSize, +Counter)
+% Displays a tag for each column: 'a', 'b', 'c', etc. so that the player can choose a move
 display_column_tags(BoardSize, BoardSize) :-
     write('|').
 display_column_tags(BoardSize, Counter) :-
@@ -29,6 +31,8 @@ display_column_tags(BoardSize, Counter) :-
     display_column_tags(BoardSize, CounterAux).
 
 % display_line(+Line)
+% Displays a specific board line by adding separators and 'b'/'w' to represent a position 
+% occupied by a black or white piece respectively 
 display_line([]) :- write('|').
 display_line([e | Rest]) :-
     write('| '),
@@ -43,6 +47,7 @@ display_line([Column | Rest]) :-
     display_line(Rest).
 
 % display_game_aux(+BoardSize, +Board, +Counter)
+% Displays the game board one line at a time
 display_game_aux(BoardSize, [], _) :-
     NChars is BoardSize * 4 + 3,
     display_line_separators(NChars).
@@ -58,6 +63,7 @@ display_game_aux(BoardSize, [Line | Rest], Counter) :-
     display_game_aux(BoardSize, Rest, CounterAux).
 
 % display_game(+GameState)
+% Displays the game board
 display_game(GameState) :-
     get_board_size(GameState, BoardSize),
     get_board(GameState, Board),
