@@ -1,21 +1,27 @@
 % GameState is saved in the format [BoardSize, Board, Level, WhitePlayer, BlackPlayer, NextPlayer]
 
 % get_board_size(+GameState, -BoardSize)
+% Determines the size of the game board given the game state
 get_board_size([BoardSize, _, _, _, _, _], BoardSize).
 
 % get_board(+GameState, -Board)
+% Determines the game board given the game state
 get_board([_, Board, _, _, _, _], Board).
 
 % get_level(+GameState, -Level)
+% Determines the game level given the game state
 get_level([_, _, Level, _, _, _], Level).
 
 % get_white_player_pontuation(+GameState, -WhitePlayer)
+% Determines the pontuation of the player with the white pieces given the game state
 get_white_player_pontuation([_, _, _, WhitePlayer, _, _], WhitePlayer).
 
 % get_black_player_pontuation(+GameState, -BlackPlayer)
+% Determines the pontuation of the player with the black pieces given the game state
 get_black_player_pontuation([_, _, _, _, BlackPlayer, _], BlackPlayer).
 
 % get_next_player(+GameState, -NextPlayer)
+% Determines the player that will be playing next given the game state
 get_next_player([_, _, _, _, _, NextPlayer], NextPlayer).
 
 
