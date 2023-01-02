@@ -8,7 +8,7 @@ read_move(Line, Column) :-
     number(N),
     Line is N-1,
     char_code('a', A),
-    char_code(L, Letter),
+    catch(char_code(L, Letter), _, fail),
     Column is Letter-A.
 
 % read_move_until_valid(+ListOfValidMoves, -Move)
