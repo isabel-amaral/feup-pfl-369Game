@@ -41,7 +41,7 @@ initial_state(Size, Level, [Size, Board, Level, 0, 0, w]) :-
 
 
 % game_over_aux(+WhitePoints, +BlackPoints, -Winner)
-% Determines which player has move points
+% Determines the winner by comparing the players points. If both players have the same points, the character 't' (for tie) is returned
 game_over_aux(WPoints, BPoints, Winner) :-
     WPoints > BPoints,
     Winner = w,
