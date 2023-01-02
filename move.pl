@@ -20,6 +20,8 @@ valid_moves(GameState, _, ListOfMoves) :-
 
 
 % valid_moves_in_sequence(+Line, +LineCounter, -ListOfMoves)
+% Determines all the empty positions in a given sequence, which may be one of the
+% board´s lines, one of its columns or one of its diagonals 
 valid_moves_in_sequence([], _, []).
 valid_moves_in_sequence([e | Rest], LineCounter, ListOfMoves) :-
     LineCounterAux is LineCounter + 1,
@@ -31,16 +33,19 @@ valid_moves_in_sequence([_ | Rest], LineCounter, ListOfMoves) :-
     valid_moves_in_sequence(Rest, LineCounterAux, ListOfMoves).
 
 % valid_moves_in_line(+Board, +LineIndex, -ListOfMoves)
+% Determines all the empty positions in a given board line
 valid_moves_in_line(Board, LineIndex, ListOfMoves) :-
     nth0(LineIndex, Board, Line),
     valid_moves_in_sequence(Line, 0, ListOfMoves).
 
 % valid_moves_in_col(+Board, +ColumnIndex, -ListOfMoves)
+% Determines all the empty positions in a given board column
 valid_moves_in_col(Board, ColumnIndex, ListOfMoves) :-
     get_column(ColumnIndex, Board, Column),
     valid_moves_in_sequence(Column, 0, ListOfMoves).
 
 % valid_moves_in_diagonal(+Board, +BoardSize, +Diagonal, -ListOfMoves)
+% Determines all the empty positions in a given board diagonal
 valid_moves_in_diagonal(Board, BoardSize, [StartingColumn, d1], ListOfMoves) :-
     get_diagonal1([0, StartingColumn], Board, BoardSize, Diagonal),
     valid_moves_in_sequence(Diagonal, 0, ListOfMoves).
@@ -101,9 +106,11 @@ move(GameState, [Row, Column], NewGameState) :-
 
 
 % there_is_good_move(+LinePoints, +ColumnPoints, +DiagonalPoints)
+% Checks if there is any move in either of the board´s lines, columns or diagonals that will guarantee 1 or more points
 there_is_good_move(0, 0, 0).
 
 % choose_move_aux(+Board, +BoardSize, +BestLine, +LinePoints, +BestColumn, +ColumnPoints, +BestDiagonal, +DiagonalPoints, -Move)
+% If there is a move that will guarantee 1 or more points, checks if that move will be done in the best line, best column or best diagonal
 choose_move_aux(Board, _, BestLine, LinePoints, _, ColumnPoints, _, DiagonalPoints, [Line, Column]) :-
     LinePoints >= ColumnPoints,
     LinePoints >= DiagonalPoints,
@@ -135,6 +142,7 @@ choose_move_aux(Board, BoardSize, _, _, _, _, [StartingColumn, d2], _, [Line, Co
     Column is StartingColumn - Line.
 
 % choose_move(+GameState, +Player, +Level, -Move)
+% Choses a random move for the pc in level 1 or the best move in the current game iteration in level 2
 choose_move(GameState, Player, 1, [Line, Column]) :-
     valid_moves(GameState, Player, ListOfMoves),
     length(ListOfMoves, Size),
